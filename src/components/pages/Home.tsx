@@ -1,5 +1,18 @@
-import { memo, VFC } from "react";
+import React, { memo, useEffect, useState, VFC } from "react";
+import { useUsers } from "../../hooks/useUsers";
 
 export const Home: VFC = memo(() => {
-  return <p>ホームページ</p>;
+  const { users, getUsers } = useUsers();
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  return (
+    <div>
+      {users.map((user) => {
+        return <p>{user.name}</p>;
+      })}
+    </div>
+  );
 });
