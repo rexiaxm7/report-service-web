@@ -1,7 +1,7 @@
-import React, { memo, useEffect, useState, VFC } from "react";
+import React, { memo, useEffect, VFC } from "react";
 import { useUsers } from "../../hooks/useUsers";
 
-export const Home: VFC = memo(() => {
+export const Users: VFC = memo(() => {
   const { users, getUsers } = useUsers();
 
   useEffect(() => {
