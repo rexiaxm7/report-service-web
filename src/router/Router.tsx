@@ -1,25 +1,23 @@
 import React, { memo, VFC } from "react";
 import { Route, Switch } from "react-router-dom";
-import { homeRoutes } from "./HomeRoutes";
+import { userRoutes } from "./directory/UserRoutes";
 import { HeaderLayout } from "../components/templates/HeaderLayout";
-// import { Login } from "../";
-// import { homeRoutes } from "./HomeRoutes";
-// import { Page404 } from "../components/pages/Page404";
-// import { HeaderLayout } from "../components/templates/HeaderLayout";
-// import { LoginUserProvider } from "../providers/LoginUserProvider";
+import { Users } from "../components/pages/Users";
+import { teamRoutes } from "./directory/TeamRoutes";
+import { Page404 } from "../components/pages/Page404";
 
 export const Router: VFC = memo(() => {
   return (
     <Switch>
       {/*<LoginUserProvider>*/}
-      {/*<Route exact path="/">*/}
-      {/*  /!*<Login></Login>*!/*/}
-      {/*</Route>*/}
+      <Route exact path="/">
+        <Users />
+      </Route>
       <Route
-        path="/home"
+        path="/teams"
         render={({ match: { url } }) => (
           <Switch>
-            {homeRoutes.map((route) => (
+            {teamRoutes.map((route) => (
               <Route
                 key={route.path}
                 exact={route.exact}
@@ -31,7 +29,23 @@ export const Router: VFC = memo(() => {
           </Switch>
         )}
       />
-      <Route path="*">{/*<Page404 />*/}</Route>
+      <Route
+        path="/users"
+        render={({ match: { url } }) => (
+          <Switch>
+            {userRoutes.map((route) => (
+              <Route
+                key={route.path}
+                exact={route.exact}
+                path={`${url}${route.path}`}
+              >
+                <HeaderLayout>{route.children}</HeaderLayout>
+              </Route>
+            ))}
+          </Switch>
+        )}
+      />
+      <Route path="*">{<Page404 />}</Route>
     </Switch>
   );
 });
