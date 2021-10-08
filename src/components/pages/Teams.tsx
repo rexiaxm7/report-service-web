@@ -8,6 +8,12 @@ export const Teams: VFC = memo(() => {
     getTeams();
   }, [getTeams]);
 
+  //検索バー
+  //追加ボタン
+  //テーブル
+  //ページング
+  //ダイアログ
+
   return (
     <div>
       {teams.map((team) => {
