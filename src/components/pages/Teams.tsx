@@ -8,7 +8,14 @@ export const Teams: VFC = memo(() => {
     getTeams();
   }, [getTeams]);
 
+  //データ
+  //チーム一覧
+  //ダイアログの状態
+
+
   return (
+      //テーブル
+      //ダイアログ
     <div>
       {teams.map((team) => {
         return <p>{team.name}</p>;
