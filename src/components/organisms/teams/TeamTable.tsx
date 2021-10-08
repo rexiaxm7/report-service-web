@@ -2,7 +2,17 @@ import {memo, VFC} from "react";
 
 type Props = {}
 export const TeamTable:VFC<Props> = memo((props) => {
+    //現在ページ
+    //テーブルの行数
+    //編集ボタンのクリック
+    //削除ボタンのクリック
+
     return (
-        <div></div>
+        // テーブルヘッダー
+        // テーブル
+        // ページネーション
+        // モーダル
+        <div>
+        </div>
     )
 })

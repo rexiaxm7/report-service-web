@@ -8,14 +8,14 @@ export const Users: VFC = memo(() => {
     getUsers();
   }, [getUsers]);
 
-  //検索バー
-  //追加ボタン
-  //テーブル
-  //ページング
-  //ダイアログ
+  //データ
+  //ユーザー一覧
+  //ダイアログの状態
 
-  return (
-    <div>
+  return(
+      //テーブル
+      //ダイアログ
+      <div>
       {users.map((user) => {
         return <p>{user.name}</p>;
       })}
