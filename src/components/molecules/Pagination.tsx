@@ -5,6 +5,6 @@ export const Pagination: VFC<Props> = memo((props) => {
 
     //ページネーション
     return (
-        <div></div>
+        <Pagination/>
     )
 })
