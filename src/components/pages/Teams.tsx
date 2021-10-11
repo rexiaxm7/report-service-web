@@ -1,5 +1,6 @@
 import React, { memo, useEffect, VFC } from "react";
 import { useTeams } from "../../hooks/useTeams";
+import {Team} from "../../types/api";
 
 export const Teams: VFC = memo(() => {
   const { teams, getTeams } = useTeams();
@@ -17,7 +18,7 @@ export const Teams: VFC = memo(() => {
       //テーブル
       //ダイアログ
     <div>
-      {teams.map((team) => {
+      {teams.map((team:Team) => {
         return <p>{team.name}</p>;
       })}
     </div>
