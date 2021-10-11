@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { Team } from "../types/api/team";
+import { Team } from "../types/api";
 import api from "../../src/axios";
 import { useMessage } from "./useMessage";
 
