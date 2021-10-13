@@ -1,5 +1,6 @@
 import React, { memo, useCallback, VFC } from "react";
 import { useHistory } from "react-router-dom";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
   AppBar,
   Box,
@@ -33,9 +34,14 @@ export const Header: VFC = memo(() => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              News
+              月報管理システム
             </Typography>
-            <Button color="inherit">Login</Button>
+            <div>
+              <IconButton>
+                <AccountCircleIcon style={{ color: "white" }} />
+              </IconButton>
+              <span>ユーザー名</span>
+            </div>
           </Toolbar>
         </AppBar>
       </Box>

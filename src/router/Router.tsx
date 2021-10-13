@@ -5,7 +5,7 @@ import { HeaderLayout } from "../components/templates/HeaderLayout";
 import { Users } from "../components/pages/Users";
 import { teamRoutes } from "./directory/TeamRoutes";
 import { Page404 } from "../components/pages/Page404";
-import {Sandbox} from "../components/pages/Sandbox";
+import { Sandbox } from "../components/pages/Sandbox";
 
 export const Router: VFC = memo(() => {
   return (
@@ -30,7 +30,9 @@ export const Router: VFC = memo(() => {
           </Switch>
         )}
       />
-        <Route path="/sandbox">{<Sandbox/>}</Route>
+      <Route path="/sandbox">
+        <HeaderLayout>{<Sandbox />}</HeaderLayout>
+      </Route>
       <Route
         path="/users"
         render={({ match: { url } }) => (
