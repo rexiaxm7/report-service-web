@@ -54,10 +54,12 @@ export const MonthlyReportForm: VFC<Props> = memo((props) => {
       <Grid item xs={12}>
         <Grid container justifyContent={"flex-end"} columnSpacing={1}>
           <Grid item>
-            <OperationButton color={"inherit"}>キャンセル</OperationButton>
+            <OperationButton color={"inherit"} onClick={() => {}}>
+              キャンセル
+            </OperationButton>
           </Grid>
           <Grid item>
-            <OperationButton>送信</OperationButton>
+            <OperationButton onClick={() => {}}>送信</OperationButton>
           </Grid>
         </Grid>
       </Grid>
