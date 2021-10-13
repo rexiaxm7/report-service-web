@@ -1,6 +1,7 @@
 import React, {memo, VFC} from "react";
 import {OperationButton} from "../atoms/buttons/OperationButton";
-import {Container, Grid, Pagination, Stack} from "@mui/material";
+import {Container, Grid, Pagination} from "@mui/material";
+import { UserTable } from "../organisms/users/UserTable";
 
 export const Sandbox: VFC = memo(() => {
 
@@ -17,6 +18,9 @@ export const Sandbox: VFC = memo(() => {
                 </Grid>
                 <Grid direction={"column"} item xs={6}>
                     <Pagination color={"primary"}/>
+                </Grid>
+                <Grid direction={"column"} item xs={6}>
+                    <UserTable></UserTable>
                 </Grid>
             </Grid>
         </Container>
