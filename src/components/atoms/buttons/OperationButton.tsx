@@ -2,7 +2,8 @@ import { memo, ReactNode, VFC } from "react";
 import { Button } from "@mui/material";
 
 type Props = {
-  color?: string;
+  //TODO : 色の型にしたい
+  color?: any;
   children: string;
   icon?: ReactNode;
   onClick?: () => void;
@@ -11,7 +12,7 @@ type Props = {
 export const OperationButton: VFC<Props> = memo((props) => {
   const { color = "primary", children, icon = null, onClick, disabled } = props;
   return (
-    <Button variant="contained" startIcon={icon}>
+    <Button color={color} variant="contained" startIcon={icon}>
       {children}
     </Button>
   );
