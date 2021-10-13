@@ -6,13 +6,26 @@ type Props = {
   color?: any;
   children: string;
   icon?: ReactNode;
-  onClick?: () => void;
+  //FIXME: 型を付ける
+  onClick: any;
   disabled?: boolean;
 };
 export const OperationButton: VFC<Props> = memo((props) => {
-  const { color = "primary", children, icon = null, onClick, disabled } = props;
+  const {
+    color = "primary",
+    children,
+    icon = null,
+    onClick,
+    disabled = false,
+  } = props;
   return (
-    <Button color={color} variant="contained" startIcon={icon}>
+    <Button
+      disabled={disabled}
+      color={color}
+      variant="contained"
+      startIcon={icon}
+      onClick={onClick}
+    >
       {children}
     </Button>
   );

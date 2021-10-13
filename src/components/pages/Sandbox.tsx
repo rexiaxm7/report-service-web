@@ -4,6 +4,8 @@ import { Container, Grid, Pagination } from "@mui/material";
 import { UserTable } from "../organisms/users/UserTable";
 import { MonthlyReport } from "./MonthlyReport";
 import { MonthlyReportForm } from "../organisms/monthlyreport/MonthlyReportForm";
+import { TeamDialog } from "../organisms/teams/TeamDialog";
+import { UserDialog } from "../organisms/users/UserDialog";
 
 export const Sandbox: VFC = memo(() => {
   return (
@@ -17,13 +19,14 @@ export const Sandbox: VFC = memo(() => {
         spacing={2}
       >
         <Grid direction={"column"} item xs={6}>
-          <OperationButton>ボタン名</OperationButton>
+          <OperationButton onClick={() => {}}>ボタン名</OperationButton>
         </Grid>
         <Grid direction={"column"} item xs={6}>
           <Pagination color={"primary"} />
         </Grid>
         <Grid direction={"column"} item xs={12}>
-          <MonthlyReport></MonthlyReport>
+          <TeamDialog id={1}></TeamDialog>
+          <UserDialog id={1}></UserDialog>
         </Grid>
       </Grid>
     </Container>

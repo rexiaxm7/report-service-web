@@ -4,9 +4,12 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
+  Grid,
+  Input,
+  InputLabel,
 } from "@mui/material";
+import { OperationButton } from "../../atoms/buttons/OperationButton";
 
 type Props = {
   id: number;
@@ -15,6 +18,10 @@ export const TeamDialog: VFC<Props> = memo((props) => {
   const { id } = props;
   const [open, setOpen] = useState(false); // 確認ダイアログの表示/非表示
 
+  const updateTeam = (id: number) => {
+    /*更新処理*/
+    console.log(id);
+  };
   const handleOpen = () => {
     setOpen(true);
   };
@@ -47,22 +54,29 @@ export const TeamDialog: VFC<Props> = memo((props) => {
       >
         <DialogTitle id="alert-dialog-title">{"確認"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            ID「{id}」を本当に削除しますか？
-          </DialogContentText>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <InputLabel htmlFor={"teamName"}>チーム名</InputLabel>
+                  <Input
+                    id={"teamName"}
+                    value={"チーム名1"}
+                    disableUnderline={true}
+                    fullWidth
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={handleClose}
-            variant="outlined"
-            color="primary"
-            autoFocus
-          >
-            やめる
-          </Button>
-          <Button onClick={(e) => deleteRow(id, e)} color="primary">
-            削除する
-          </Button>
+          <OperationButton onClick={handleClose} color="inherit">
+            キャンセル
+          </OperationButton>
+          <OperationButton onClick={updateTeam(1)} color="primary">
+            更新
+          </OperationButton>
         </DialogActions>
       </Dialog>
     </div>
