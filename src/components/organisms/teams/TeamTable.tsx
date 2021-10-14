@@ -74,7 +74,6 @@ export const TeamTable: VFC<Props> = memo((props) => {
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         disableSelectionOnClick
       />
-      {/*// モーダル*/}
     </>
   );
 });
