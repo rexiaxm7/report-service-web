@@ -6,6 +6,7 @@ export const useUsers = () => {
   const { showMessage } = useMessage();
   const [users, setUsers] = useState<Array<DisplayUser>>([]);
   const getUsers = useCallback(() => {
+    console.log("getusers");
     // api
     //   .get<Array<User>>("/users")
     //   .then((res) => setUsers(res.data))

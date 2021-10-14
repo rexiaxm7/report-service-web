@@ -10,45 +10,27 @@ import {
   InputLabel,
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
+import { DisplayUser } from "../../../types/User";
 
 type Props = {
-  id: number;
+  toggleUserDialog: (isOpen?: boolean) => void;
+  user: DisplayUser | null;
+  isDialogOpen: boolean;
 };
 export const UserDialog: VFC<Props> = memo((props) => {
-  const { id } = props;
-  const [open, setOpen] = useState(false); // 確認ダイアログの表示/非表示
-
+  const { user, isDialogOpen, toggleUserDialog } = props;
   const updateUser = (id: number) => {
     /*更新処理*/
     console.log(id);
   };
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const deleteRow = (id: number, e: any) => {
-    // (ここで削除処理)
-    setOpen(false);
-  };
-  //日付
-  //テキストエリア
-  //キャンセルボタン
-  //操作ボタン
   return (
     // チーム名
     //所属ユーザー変更
     //更新ボタン
     <div>
-      <Button variant="outlined" color="primary" onClick={handleOpen}>
-        削除
-      </Button>
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={isDialogOpen}
+        onClose={() => toggleUserDialog(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -71,7 +53,10 @@ export const UserDialog: VFC<Props> = memo((props) => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <OperationButton onClick={handleClose} color="inherit">
+          <OperationButton
+            onClick={() => toggleUserDialog(false)}
+            color="inherit"
+          >
             キャンセル
           </OperationButton>
           <OperationButton onClick={() => updateUser(1)} color="primary">

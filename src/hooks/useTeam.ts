@@ -7,6 +7,7 @@ export const useTeam = () => {
   const { showMessage } = useMessage();
   const [team, setTeam] = useState<Array<Team>>([]);
   const getTeam = useCallback((id: number) => {
+    console.log("getTeam");
     api
       .get<Array<Team>>(`/team/${id}`)
       .then((res) => setTeam(res.data))

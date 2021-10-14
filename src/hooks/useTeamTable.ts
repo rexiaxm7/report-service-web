@@ -11,10 +11,12 @@ export const useTeamTable = () => {
   const deleteTeam = (id: number) => {};
   //編集ボタンのクリック
   const onClickEditButton = (id: number) => {
+    console.log("onClickDeleteButton");
     editTeam(id);
   };
   //削除ボタンのクリック
   const onClickDeleteButton = (id: number) => {
+    console.log("onClickDeleteButton");
     deleteTeam(id);
   };
   return {

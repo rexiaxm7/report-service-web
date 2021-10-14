@@ -24,10 +24,6 @@ export const Sandbox: VFC = memo(() => {
         <Grid direction={"column"} item xs={6}>
           <Pagination color={"primary"} />
         </Grid>
-        <Grid direction={"column"} item xs={12}>
-          <TeamDialog id={1}></TeamDialog>
-          <UserDialog id={1}></UserDialog>
-        </Grid>
       </Grid>
     </Container>
   );

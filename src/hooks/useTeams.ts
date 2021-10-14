@@ -6,6 +6,7 @@ export const useTeams = () => {
   const { showMessage } = useMessage();
   const [teams, setTeams] = useState<Array<DisplayTeam>>([]);
   const getTeams = useCallback(() => {
+    console.log("getTeams");
     // api
     //   .get<Array<User>>("/users")
     //   .then((res) => setUsers(res.data))
