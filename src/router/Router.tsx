@@ -44,14 +44,14 @@ export const Router: VFC = memo(() => {
                   exact={route.exact}
                   path={`${url}${route.path}`}
                 >
-                  <HeaderLayout>{route.children}</HeaderLayout>npm
+                  <HeaderLayout>{route.children}</HeaderLayout>
                 </Route>
               ))}
             </Switch>
           )}
         />
-        <Route path="*">{<Page404 />}</Route>
       </SideMenuProvider>
+      <Route path="*">{<Page404 />}</Route>
     </Switch>
   );
 });
