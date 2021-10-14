@@ -1,9 +1,10 @@
-import React, { memo, MouseEventHandler, ReactNode, VFC } from "react";
+import React, { memo, ReactNode, VFC } from "react";
 import { Header } from "../organisms/layout/Header";
 import {
   Box,
-  Divider,
+  Container,
   Drawer,
+  Grid,
   List,
   ListItem,
   ListItemIcon,
@@ -44,29 +45,42 @@ export const HeaderLayout: VFC<Props> = memo((props) => {
   ];
   return (
     <>
-      <Header onClickMenu={toggleDrawer} />
-      {children}
-      <Drawer
-        anchor={"left"}
-        open={isOpen}
-        onClose={toggleDrawer}
-        variant={"temporary"}
-      >
-        <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
-          <List>
-            {routes.map((route, index) => (
-              <ListItem
-                button
-                key={route.displayName}
-                onClick={() => onClickSideMenu(route)}
-              >
-                <ListItemIcon>{route.icon}</ListItemIcon>
-                <ListItemText primary={route.displayName} />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Drawer>
+      <div>
+        <Header onClickMenu={toggleDrawer} />
+        <Container>
+          <Grid
+            container
+            height={"100vh"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Grid item xs={12}>
+              {children}
+            </Grid>
+          </Grid>
+        </Container>
+        <Drawer
+          anchor={"left"}
+          open={isOpen}
+          onClose={toggleDrawer}
+          variant={"temporary"}
+        >
+          <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
+            <List>
+              {routes.map((route, index) => (
+                <ListItem
+                  button
+                  key={route.displayName}
+                  onClick={() => onClickSideMenu(route)}
+                >
+                  <ListItemIcon>{route.icon}</ListItemIcon>
+                  <ListItemText primary={route.displayName} />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Drawer>
+      </div>
     </>
   );
 });

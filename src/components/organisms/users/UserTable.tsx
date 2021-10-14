@@ -10,6 +10,7 @@ import { DisplayUser } from "../../../types/User";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { UserTableOperationButton } from "./UserTableOperationButton";
 
 type Props = {};
 export const UserTable: VFC<Props> = memo((props) => {
@@ -43,28 +44,12 @@ export const UserTable: VFC<Props> = memo((props) => {
       flex: 0.1,
       minWidth: 110,
       renderCell: (user: DisplayUser) => (
-        <div>
-          <IconButton color={"success"}>
-            <EditIcon
-              onClick={() =>
-                onClickEditButton({
-                  user,
-                  onOpen: () => toggleUserDialog(true),
-                })
-              }
-            />
-          </IconButton>
-          <IconButton color={"error"}>
-            <DeleteIcon
-              onClick={() =>
-                onClickDeleteButton({
-                  user,
-                  onOpen: () => toggleUserDialog(true),
-                })
-              }
-            />
-          </IconButton>
-        </div>
+        <UserTableOperationButton
+          user={user}
+          toggleUserDialog={toggleUserDialog}
+          onClickDeleteButton={onClickDeleteButton}
+          onClickEditButton={onClickEditButton}
+        />
       ),
       disableClickEventBubbling: true,
     },
