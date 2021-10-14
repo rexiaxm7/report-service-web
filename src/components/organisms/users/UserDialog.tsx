@@ -74,7 +74,7 @@ export const UserDialog: VFC<Props> = memo((props) => {
           <OperationButton onClick={handleClose} color="inherit">
             キャンセル
           </OperationButton>
-          <OperationButton onClick={updateUser(1)} color="primary">
+          <OperationButton onClick={() => updateUser(1)} color="primary">
             更新
           </OperationButton>
         </DialogActions>
