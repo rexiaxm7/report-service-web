@@ -18,7 +18,7 @@ type Props = {
 };
 export const UserDialog: VFC<Props> = memo((props) => {
   const { user, isDialogOpen, toggleUserDialog } = props;
-  const updateUser = (id: number) => {
+  const updateUser = (id?: number) => {
     /*更新処理*/
     console.log(id);
   };
@@ -58,7 +58,7 @@ export const UserDialog: VFC<Props> = memo((props) => {
           >
             キャンセル
           </OperationButton>
-          <OperationButton onClick={() => updateUser(1)} color="primary">
+          <OperationButton onClick={() => updateUser(user?.id)} color="primary">
             更新
           </OperationButton>
         </DialogActions>
