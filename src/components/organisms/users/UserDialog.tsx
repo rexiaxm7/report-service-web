@@ -1,6 +1,5 @@
-import { memo, useState, VFC } from "react";
+import { memo, VFC } from "react";
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -43,7 +42,7 @@ export const UserDialog: VFC<Props> = memo((props) => {
                   <InputLabel htmlFor={"userName"}>ユーザー名</InputLabel>
                   <Input
                     id={"userName"}
-                    value={"苗字 名前"}
+                    value={user?.name}
                     disableUnderline={true}
                     fullWidth
                   />

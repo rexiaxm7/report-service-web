@@ -17,6 +17,7 @@ export const useUserTable = () => {
   const onClickEditButton = useCallback((props: OnClickButtonProps) => {
     console.log("onClickEditButton");
     const { user, onOpen } = props;
+    console.log(props);
     setSelectedUser(user);
     onOpen();
   }, []);

@@ -6,10 +6,6 @@ import { useUsers } from "../../../hooks/useUsers";
 import { useUserTable } from "../../../hooks/useUserTable";
 import { useUserDialog } from "../../../hooks/useUserDialog";
 import { UserDialog } from "./UserDialog";
-import { DisplayUser } from "../../../types/User";
-import { IconButton } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { UserTableOperationButton } from "./UserTableOperationButton";
 
 type Props = {};
@@ -43,9 +39,9 @@ export const UserTable: VFC<Props> = memo((props) => {
       editable: false,
       flex: 0.1,
       minWidth: 110,
-      renderCell: (user: DisplayUser) => (
+      renderCell: (param: any) => (
         <UserTableOperationButton
-          user={user}
+          user={param.row}
           toggleUserDialog={toggleUserDialog}
           onClickDeleteButton={onClickDeleteButton}
           onClickEditButton={onClickEditButton}
