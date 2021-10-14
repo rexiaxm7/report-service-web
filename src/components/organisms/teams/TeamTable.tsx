@@ -1,30 +1,37 @@
-import React, { memo, VFC } from "react";
+import React, { memo, useEffect, VFC } from "react";
 import { TeamTableHeader } from "./TeamTableHeader";
 import { DataGrid } from "@mui/x-data-grid";
 import dataGridJaJP from "../users/dataGridJaJP";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
+import { useTeams } from "../../../hooks/useTeams";
+import { useTeamTable } from "../../../hooks/useTeamTable";
 
 type Props = {};
 export const TeamTable: VFC<Props> = memo((props) => {
-  //現在ページ
-  //テーブルの行数
-  //編集ボタンのクリック
-  //削除ボタンのクリック
-
+  const { teams, getTeams, setTeams } = useTeams();
+  const {
+    onClickDeleteButton,
+    onClickEditButton,
+    rowsPerPageOptions,
+    setPageSize,
+    pageSize,
+  } = useTeamTable();
   const localizationJapanese = dataGridJaJP;
+
+  //TODO:rendercellをどうにかしてhooksに持っていきたい
   const headers = [
     { field: "id", headerName: "ID", disableClickEventBubbling: true },
     {
-      field: "teamName",
+      field: "name",
       headerName: "チーム名",
       flex: 0.7,
       editable: false,
       disableClickEventBubbling: true,
     },
     {
-      field: "delete",
+      field: "operation",
       headerName: " ",
       sortable: false,
       editable: false,
@@ -34,9 +41,12 @@ export const TeamTable: VFC<Props> = memo((props) => {
         return (
           <div>
             <IconButton color={"error"}>
-              <DeleteIcon />
+              <DeleteIcon onClick={() => onClickDeleteButton(params.id)} />
             </IconButton>
-            <IconButton color={"success"}>
+            <IconButton
+              onClick={() => onClickEditButton(params.id)}
+              color={"success"}
+            >
               <EditIcon />
             </IconButton>
           </div>
@@ -45,30 +55,23 @@ export const TeamTable: VFC<Props> = memo((props) => {
       disableClickEventBubbling: true,
     },
   ];
-  const datas = [
-    { id: 1, teamName: "TeamName1" },
-    { id: 2, teamName: "TeamName2" },
-    { id: 3, teamName: "TeamName3" },
-    { id: 4, teamName: "TeamName4" },
-    { id: 5, teamName: "TeamName5" },
-    { id: 6, teamName: "TeamName6" },
-    { id: 7, teamName: "TeamName7" },
-    { id: 8, teamName: "TeamName8" },
-    { id: 9, teamName: "TeamName9" },
-    { id: 10, teamName: "TeamName10" },
-    { id: 11, teamName: "TeamName11" },
-  ];
+
+  useEffect(() => {
+    setTeams(getTeams());
+  }, []);
+
   return (
     <>
-      <TeamTableHeader></TeamTableHeader>
+      <TeamTableHeader />
       <DataGrid
         disableColumnMenu
         autoHeight
         localeText={localizationJapanese}
-        rows={datas}
+        rows={teams}
         columns={headers}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={pageSize}
+        rowsPerPageOptions={rowsPerPageOptions}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         disableSelectionOnClick
       />
       {/*// モーダル*/}
