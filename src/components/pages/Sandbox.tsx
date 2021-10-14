@@ -1,6 +1,7 @@
 import React, { memo, VFC } from "react";
 import { OperationButton } from "../atoms/buttons/OperationButton";
 import { Container, Grid, Pagination } from "@mui/material";
+import { ConfirmDialog } from "../molecules/ConfirmDialog";
 
 export const Sandbox: VFC = memo(() => {
   return (
@@ -17,7 +18,12 @@ export const Sandbox: VFC = memo(() => {
           <OperationButton onClick={() => {}}>ボタン名</OperationButton>
         </Grid>
         <Grid direction={"column"} item xs={6}>
-          <Pagination color={"primary"} />
+          <ConfirmDialog
+            isDialogOpen={true}
+            toggleConfirmDialog={() => {}}
+            onClickAction={() => {}}
+            onClickCancel={() => {}}
+          ></ConfirmDialog>
         </Grid>
       </Grid>
     </Container>
