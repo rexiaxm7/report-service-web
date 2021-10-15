@@ -3,31 +3,52 @@ import { Team, User } from "../../types/api";
 import api from "../../axios";
 import { useMessage } from "../view/useMessage";
 import { DisplayUser } from "../../types/User";
+import { AxiosResponse } from "axios";
 
 export const useUser = () => {
   const { showMessage } = useMessage();
-  const [user, setUser] = useState<Array<User>>([]);
-  const getUser = useCallback((id: number) => {
-    console.log("getTeam");
+  const [user, setUser] = useState<DisplayUser | null>(null);
+  const getUser = useCallback((userId: number) => {
+    console.log("getUser");
     api
-      .get<Array<User>>(`/team/${id}`)
-      .then((res) => setUser(res.data))
+      .get(`/users/${userId}`)
+      .then((res) => {
+        const { id, name } = res.data;
+        const displayUser: DisplayUser = {
+          id,
+          name,
+        };
+        setUser(displayUser);
+      })
       .catch((e) => showMessage(e.message));
   }, []);
 
   const registerUser = useCallback((user: DisplayUser) => {
     /*登録処理*/
-    console.log("登録処理が完了しました");
+    api
+      .post(`/users`, user)
+      .then((res) => {
+        setUser(null);
+      })
+      .catch((e) => showMessage(e.message));
   }, []);
 
   const updateUser = useCallback((user: DisplayUser) => {
-    /*更新処理*/
-    console.log("更新処理が完了しました");
+    api
+      .put(`/users/${user.id}`, user)
+      .then((res) => {
+        getUser(user.id);
+      })
+      .catch((e) => showMessage(e.message));
   }, []);
 
-  const deleteUser = useCallback((user: DisplayUser) => {
-    /*削除処理*/
-    console.log("削除処理が完了しました");
+  const deleteUser = useCallback((userId: number) => {
+    api
+      .delete(`/users/${userId}`)
+      .then((res) => {
+        setUser(null);
+      })
+      .catch((e) => showMessage(e.message));
   }, []);
 
   return { user, getUser, updateUser, deleteUser, registerUser };

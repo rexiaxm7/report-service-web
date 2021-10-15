@@ -35,7 +35,7 @@ export const useUserTable = () => {
   }, []);
 
   const onClickActionButton = useCallback(
-    (selectedUser: DisplayUser | null) => deleteUser(selectedUser!),
+    (selectedUser: DisplayUser | null) => deleteUser(selectedUser!.id),
     []
   );
 
