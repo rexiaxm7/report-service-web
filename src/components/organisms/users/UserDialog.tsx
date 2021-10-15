@@ -1,4 +1,4 @@
-import { memo, VFC } from "react";
+import { memo, useEffect, VFC } from "react";
 import {
   Dialog,
   DialogActions,
@@ -10,18 +10,24 @@ import {
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
 import { DisplayUser } from "../../../types/User";
+import { useUserDialog } from "../../../hooks/useUserDialog";
 
 type Props = {
   toggleUserDialog: (isOpen?: boolean) => void;
   user: DisplayUser | null;
   isDialogOpen: boolean;
 };
+
 export const UserDialog: VFC<Props> = memo((props) => {
   const { user, isDialogOpen, toggleUserDialog } = props;
-  const updateUser = (id?: number) => {
-    /*更新処理*/
-    console.log(id);
-  };
+
+  const { userName, setUserName, onChangeUserName, onClickCancel, updateUser } =
+    useUserDialog();
+
+  useEffect(() => {
+    setUserName(user?.name ?? "");
+  }, [user, toggleUserDialog]);
+
   return (
     // チーム名
     //所属ユーザー変更
@@ -39,12 +45,22 @@ export const UserDialog: VFC<Props> = memo((props) => {
             <Grid item xs={12}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
+                  <InputLabel htmlFor={"userId"}>ユーザーID</InputLabel>
+                  <Input
+                    id={"userId"}
+                    value={user?.id}
+                    readOnly
+                    disableUnderline
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12}>
                   <InputLabel htmlFor={"userName"}>ユーザー名</InputLabel>
                   <Input
                     id={"userName"}
-                    value={user?.name}
-                    disableUnderline={true}
+                    value={userName}
                     fullWidth
+                    onChange={onChangeUserName}
                   />
                 </Grid>
               </Grid>
@@ -53,12 +69,15 @@ export const UserDialog: VFC<Props> = memo((props) => {
         </DialogContent>
         <DialogActions>
           <OperationButton
-            onClick={() => toggleUserDialog(false)}
+            onClick={() => onClickCancel(toggleUserDialog)}
             color="inherit"
           >
             キャンセル
           </OperationButton>
-          <OperationButton onClick={() => updateUser(user?.id)} color="primary">
+          <OperationButton
+            onClick={() => updateUser(user?.id, toggleUserDialog)}
+            color="primary"
+          >
             更新
           </OperationButton>
         </DialogActions>
