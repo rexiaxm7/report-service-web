@@ -23,8 +23,8 @@ export const UserTable: VFC<Props> = memo((props) => {
     onClickActionButton,
     selectedUser,
   } = useUserTable();
-  const { toggleUserDialog, isDialogOpen } = useUserDialog();
-  const { toggleOperationDialog, isOperationDialogOpen } = useOperationDialog();
+  const { isOperationModalOpen, setIsOperationModalOpen } =
+    useOperationDialog();
   const { deleteUserMessage } = useMessage();
   const localizationJapanese = dataGridJaJP;
 
@@ -48,8 +48,6 @@ export const UserTable: VFC<Props> = memo((props) => {
       renderCell: (param: any) => (
         <UserTableOperationButton
           user={param.row}
-          toggleUserDialog={toggleUserDialog}
-          toggleOperationDialog={toggleOperationDialog}
           onClickDeleteButton={onClickDeleteButton}
           onClickEditButton={onClickEditButton}
         />
@@ -78,15 +76,9 @@ export const UserTable: VFC<Props> = memo((props) => {
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         disableSelectionOnClick
       />
-      <UserDialog
-        toggleUserDialog={() => toggleUserDialog()}
-        isDialogOpen={isDialogOpen}
-        user={selectedUser}
-      />
+      <UserDialog user={selectedUser} />
       <OperationDialog
-        toggleOperationDialog={() => toggleOperationDialog()}
-        isDialogOpen={isOperationDialogOpen}
-        onClickCancel={() => toggleOperationDialog(false)}
+        onClickCancel={() => setIsOperationModalOpen(false)}
         onClickAction={() => onClickActionButton(selectedUser!)}
         title={"削除"}
         message={deleteUserMessage(selectedUser)}

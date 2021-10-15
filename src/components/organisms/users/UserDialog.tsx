@@ -13,25 +13,24 @@ import { DisplayUser } from "../../../types/User";
 import { useUserDialog } from "../../../hooks/view/useUserDialog";
 
 type Props = {
-  toggleUserDialog: (isOpen?: boolean) => void;
   user: DisplayUser | null;
-  isDialogOpen: boolean;
 };
 
 export const UserDialog: VFC<Props> = memo((props) => {
-  const { user, isDialogOpen, toggleUserDialog } = props;
+  const { user } = props;
+  const { isUserModalOpen, setIsUserModalOpen } = useUserDialog();
 
   const {
     userName,
     setUserName,
     onChangeUserName,
     onClickCancel,
-    onClickUpdate,
+    onClickEditOrUpdate,
   } = useUserDialog();
 
   useEffect(() => {
     setUserName(user?.name ?? "");
-  }, [user, toggleUserDialog]);
+  }, [user]);
 
   return (
     // チーム名
@@ -39,12 +38,12 @@ export const UserDialog: VFC<Props> = memo((props) => {
     //更新ボタン
     <div>
       <Dialog
-        open={isDialogOpen}
-        onClose={() => toggleUserDialog(false)}
+        open={isUserModalOpen}
+        onClose={() => setIsUserModalOpen(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"確認"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"編集"}</DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -73,14 +72,11 @@ export const UserDialog: VFC<Props> = memo((props) => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <OperationButton
-            onClick={() => onClickCancel(toggleUserDialog)}
-            color="inherit"
-          >
+          <OperationButton onClick={() => onClickCancel()} color="inherit">
             キャンセル
           </OperationButton>
           <OperationButton
-            onClick={() => onClickUpdate(user?.id, toggleUserDialog)}
+            onClick={() => onClickEditOrUpdate(user?.id)}
             color="primary"
           >
             更新

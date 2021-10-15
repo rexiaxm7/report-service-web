@@ -2,14 +2,16 @@ import { useCallback, useState } from "react";
 import { useMessage } from "./useMessage";
 import { DisplayUser } from "../../types/User";
 import { useUser } from "../api/useUser";
+import { useUserDialog } from "./useUserDialog";
 
 export type OnClickButtonProps = {
   user: DisplayUser;
-  onOpen: () => void;
 };
+
 export const useUserTable = () => {
   const { showMessage } = useMessage();
   const { deleteUser } = useUser();
+  const { setIsEdit, setIsUserModalOpen, isUserModalOpen } = useUserDialog();
 
   //ユーザー選択
   const [selectedUser, setSelectedUser] = useState<DisplayUser | null>(null);
@@ -21,17 +23,24 @@ export const useUserTable = () => {
   //テーブルのボタン操作
   const onClickEditButton = useCallback((props: OnClickButtonProps) => {
     console.log("onClickEditButton");
-    const { user, onOpen } = props;
+    const { user } = props;
     console.log(props);
     setSelectedUser(user);
-    onOpen();
+    setIsUserModalOpen(true);
+  }, []);
+
+  const onClickAddButton = useCallback(() => {
+    console.log("onClickAddButton");
+    setSelectedUser(null);
+    setIsUserModalOpen(true);
+    setIsEdit(false);
   }, []);
 
   const onClickDeleteButton = useCallback((props: OnClickButtonProps) => {
     console.log("onClickDeleteButton");
-    const { user, onOpen } = props;
+    const { user } = props;
     setSelectedUser(user);
-    onOpen();
+    setIsUserModalOpen(true);
   }, []);
 
   const onClickActionButton = useCallback(
@@ -48,5 +57,6 @@ export const useUserTable = () => {
     setSelectedUser,
     selectedUser,
     onClickActionButton,
+    onClickAddButton,
   };
 };

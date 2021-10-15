@@ -1,49 +1,19 @@
 //TODO:汎用部分をTableHeaderとしてmoleculeに分割したい
 
-import { ChangeEvent, memo, useState, VFC } from "react";
+import { memo, VFC } from "react";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
-import { FormControl, Grid, Input, InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { Grid } from "@mui/material";
+import { useUserTable } from "../../../hooks/view/useUserTable";
 
 type Props = {};
 export const UserTableHeader: VFC<Props> = memo((props) => {
-  const [searchText, setSearchText] = useState("");
-
-  const onChangeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
-
-  const addUser = () => {
-    //openDialog
-  };
-
-  const onClickAddButton = () => {
-    addUser();
-  };
+  const { onClickAddButton } = useUserTable();
 
   return (
     <>
-      <Grid
-        container
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        mb={2}
-      >
+      <Grid container alignItems={"center"} justifyContent={"end"} mb={2}>
         <Grid item>
-          <FormControl variant="standard">
-            <Input
-              id="input-with-icon-adornment"
-              startAdornment={
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              }
-              onChange={onChangeSearchInput}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item>
-          <OperationButton onClick={() => onClickAddButton}>
+          <OperationButton onClick={() => onClickAddButton()}>
             追加
           </OperationButton>
         </Grid>

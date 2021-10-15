@@ -6,12 +6,11 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { OperationButton } from "../atoms/buttons/OperationButton";
+import { useOperationDialog } from "../../hooks/view/useOperationDialog";
 
 type Props = {
   onClickAction: () => void;
   onClickCancel: () => void;
-  isDialogOpen: boolean;
-  toggleOperationDialog: (isOpen?: boolean) => void;
   actionButtonColor?: string;
   actionButtonName?: string;
   cancelButtonColor?: string;
@@ -20,22 +19,22 @@ type Props = {
   title?: string;
 };
 export const OperationDialog: VFC<Props> = memo((props) => {
+  const { isOperationModalOpen, setIsOperationModalOpen } =
+    useOperationDialog();
   const {
     title,
     onClickAction,
     onClickCancel,
     cancelButtonColor = "inherit",
     actionButtonColor = "primary",
-    isDialogOpen,
-    toggleOperationDialog,
     message,
     cancelButtonName = "キャンセル",
     actionButtonName = "OK",
   } = props;
   return (
     <Dialog
-      open={isDialogOpen}
-      onClose={() => toggleOperationDialog(false)}
+      open={isOperationModalOpen}
+      onClose={() => setIsOperationModalOpen(false)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >

@@ -1,9 +1,7 @@
 import { useCallback, useState } from "react";
-import { Team, User } from "../../types/api";
 import api from "../../axios";
 import { useMessage } from "../view/useMessage";
-import { DisplayUser } from "../../types/User";
-import { AxiosResponse } from "axios";
+import { DisplayUser, RegisterUser } from "../../types/User";
 
 export const useUser = () => {
   const { showMessage } = useMessage();
@@ -23,7 +21,7 @@ export const useUser = () => {
       .catch((e) => showMessage(e.message));
   }, []);
 
-  const registerUser = useCallback((user: DisplayUser) => {
+  const registerUser = useCallback((user: RegisterUser) => {
     /*登録処理*/
     api
       .post(`/users`, user)
