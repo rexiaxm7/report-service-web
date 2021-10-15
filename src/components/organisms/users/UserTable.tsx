@@ -10,11 +10,10 @@ import { UserTableOperationButton } from "./UserTableOperationButton";
 import { OperationDialog } from "../../molecules/OperationDialog";
 import { useOperationDialog } from "../../../hooks/view/useOperationDialog";
 import { useMessage } from "../../../hooks/view/useMessage";
-import { DisplayUser } from "../../../types/User";
 
 type Props = {};
 export const UserTable: VFC<Props> = memo((props) => {
-  const { users, getUsers, setUsers } = useUsers();
+  const { users, getUsers } = useUsers();
   const {
     rowsPerPageOptions,
     setPageSize,
@@ -28,11 +27,6 @@ export const UserTable: VFC<Props> = memo((props) => {
   const { toggleOperationDialog, isOperationDialogOpen } = useOperationDialog();
   const { deleteUserMessage } = useMessage();
   const localizationJapanese = dataGridJaJP;
-
-  useEffect(() => {
-    console.log("setUsers");
-    setUsers(getUsers());
-  }, []);
 
   //TODO:rendercellをどうにかしてhooksに持っていきたい
   const headers: any = [
@@ -63,6 +57,9 @@ export const UserTable: VFC<Props> = memo((props) => {
       disableClickEventBubbling: true,
     },
   ];
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <>
