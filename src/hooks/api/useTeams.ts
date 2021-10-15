@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { useMessage } from "./useMessage";
-import { DisplayTeam } from "../types/Team";
+import { useMessage } from "../view/useMessage";
+import { DisplayTeam } from "../../types/Team";
 
 export const useTeams = () => {
   const { showMessage } = useMessage();

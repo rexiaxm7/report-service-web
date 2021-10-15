@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { useMessage } from "./useMessage";
-import { DisplayUser } from "../types/User";
+import { useMessage } from "../view/useMessage";
+import { DisplayUser } from "../../types/User";
 
 export const useUsers = () => {
   const { showMessage } = useMessage();

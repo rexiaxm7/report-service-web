@@ -2,14 +2,14 @@ import React, { memo, useEffect, VFC } from "react";
 import { UserTableHeader } from "./UserTableHeader";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import dataGridJaJP from "./dataGridJaJP";
-import { useUsers } from "../../../hooks/useUsers";
-import { useUserTable } from "../../../hooks/useUserTable";
-import { useUserDialog } from "../../../hooks/useUserDialog";
+import { useUsers } from "../../../hooks/api/useUsers";
+import { useUserTable } from "../../../hooks/view/useUserTable";
+import { useUserDialog } from "../../../hooks/view/useUserDialog";
 import { UserDialog } from "./UserDialog";
 import { UserTableOperationButton } from "./UserTableOperationButton";
 import { OperationDialog } from "../../molecules/OperationDialog";
-import { useOperationDialog } from "../../../hooks/useOperationDialog";
-import { useMessage } from "../../../hooks/useMessage";
+import { useOperationDialog } from "../../../hooks/view/useOperationDialog";
+import { useMessage } from "../../../hooks/view/useMessage";
 import { DisplayUser } from "../../../types/User";
 
 type Props = {};
@@ -21,16 +21,18 @@ export const UserTable: VFC<Props> = memo((props) => {
     pageSize,
     onClickDeleteButton,
     onClickEditButton,
+    onClickActionButton,
     selectedUser,
   } = useUserTable();
-  const localizationJapanese = dataGridJaJP;
   const { toggleUserDialog, isDialogOpen } = useUserDialog();
   const { toggleOperationDialog, isOperationDialogOpen } = useOperationDialog();
   const { deleteUserMessage } = useMessage();
+  const localizationJapanese = dataGridJaJP;
 
-  const userDelete = (selectedUser: DisplayUser | null) => {
-    //削除処理
-  };
+  useEffect(() => {
+    console.log("setUsers");
+    setUsers(getUsers());
+  }, []);
 
   //TODO:rendercellをどうにかしてhooksに持っていきたい
   const headers: any = [
@@ -62,11 +64,6 @@ export const UserTable: VFC<Props> = memo((props) => {
     },
   ];
 
-  useEffect(() => {
-    console.log("setUsers");
-    setUsers(getUsers());
-  }, []);
-
   return (
     <>
       <UserTableHeader />
@@ -93,7 +90,7 @@ export const UserTable: VFC<Props> = memo((props) => {
         toggleOperationDialog={() => toggleOperationDialog()}
         isDialogOpen={isOperationDialogOpen}
         onClickCancel={() => toggleOperationDialog(false)}
-        onClickAction={() => userDelete(selectedUser)}
+        onClickAction={() => onClickActionButton(selectedUser!)}
         title={"削除"}
         message={deleteUserMessage(selectedUser)}
       />

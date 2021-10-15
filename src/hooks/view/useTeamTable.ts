@@ -11,7 +11,7 @@ export const useTeamTable = () => {
   const deleteTeam = (id: number) => {};
   //編集ボタンのクリック
   const onClickEditButton = (id: number) => {
-    console.log("onClickDeleteButton");
+    console.log("onClickEditButton");
     editTeam(id);
   };
   //削除ボタンのクリック
@@ -19,6 +19,9 @@ export const useTeamTable = () => {
     console.log("onClickDeleteButton");
     deleteTeam(id);
   };
+
+  const onClickActionButton = () => {};
+
   return {
     pageSize,
     setPageSize,

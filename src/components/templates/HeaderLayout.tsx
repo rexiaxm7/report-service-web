@@ -10,7 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import { useSideMenu } from "../../hooks/useSideMenu";
+import { useSideMenu } from "../../hooks/view/useSideMenu";
 import PersonIcon from "@mui/icons-material/Person";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import DescriptionIcon from "@mui/icons-material/Description";

@@ -1,4 +1,4 @@
-import { DisplayUser } from "../types/User";
+import { DisplayUser } from "../../types/User";
 
 export const useMessage = () => {
   const showMessage = (message: string) => {

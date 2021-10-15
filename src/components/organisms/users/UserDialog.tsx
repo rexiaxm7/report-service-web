@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
 import { DisplayUser } from "../../../types/User";
-import { useUserDialog } from "../../../hooks/useUserDialog";
+import { useUserDialog } from "../../../hooks/view/useUserDialog";
 
 type Props = {
   toggleUserDialog: (isOpen?: boolean) => void;
@@ -21,8 +21,13 @@ type Props = {
 export const UserDialog: VFC<Props> = memo((props) => {
   const { user, isDialogOpen, toggleUserDialog } = props;
 
-  const { userName, setUserName, onChangeUserName, onClickCancel, updateUser } =
-    useUserDialog();
+  const {
+    userName,
+    setUserName,
+    onChangeUserName,
+    onClickCancel,
+    onClickUpdate,
+  } = useUserDialog();
 
   useEffect(() => {
     setUserName(user?.name ?? "");
@@ -75,7 +80,7 @@ export const UserDialog: VFC<Props> = memo((props) => {
             キャンセル
           </OperationButton>
           <OperationButton
-            onClick={() => updateUser(user?.id, toggleUserDialog)}
+            onClick={() => onClickUpdate(user?.id, toggleUserDialog)}
             color="primary"
           >
             更新

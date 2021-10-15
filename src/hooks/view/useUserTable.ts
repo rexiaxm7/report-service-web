@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useMessage } from "./useMessage";
-import { DisplayUser } from "../types/User";
+import { DisplayUser } from "../../types/User";
+import { useUser } from "../api/useUser";
 
 export type OnClickButtonProps = {
   user: DisplayUser;
@@ -8,6 +9,10 @@ export type OnClickButtonProps = {
 };
 export const useUserTable = () => {
   const { showMessage } = useMessage();
+  const { deleteUser } = useUser();
+
+  //ユーザー選択
+  const [selectedUser, setSelectedUser] = useState<DisplayUser | null>(null);
 
   //テーブルの行数
   const [pageSize, setPageSize] = useState(10);
@@ -21,6 +26,7 @@ export const useUserTable = () => {
     setSelectedUser(user);
     onOpen();
   }, []);
+
   const onClickDeleteButton = useCallback((props: OnClickButtonProps) => {
     console.log("onClickDeleteButton");
     const { user, onOpen } = props;
@@ -28,8 +34,10 @@ export const useUserTable = () => {
     onOpen();
   }, []);
 
-  //ユーザー選択
-  const [selectedUser, setSelectedUser] = useState<DisplayUser | null>(null);
+  const onClickActionButton = useCallback(
+    (selectedUser: DisplayUser | null) => deleteUser(selectedUser!),
+    []
+  );
 
   return {
     pageSize,
@@ -39,5 +47,6 @@ export const useUserTable = () => {
     onClickDeleteButton,
     setSelectedUser,
     selectedUser,
+    onClickActionButton,
   };
 };
