@@ -7,6 +7,9 @@ import { useUserTable } from "../../../hooks/useUserTable";
 import { useUserDialog } from "../../../hooks/useUserDialog";
 import { UserDialog } from "./UserDialog";
 import { UserTableOperationButton } from "./UserTableOperationButton";
+import { OperationDialog } from "../../molecules/OperationDialog";
+import { useOperationDialog } from "../../../hooks/useOperationDialog";
+import { useMessage } from "../../../hooks/useMessage";
 
 type Props = {};
 export const UserTable: VFC<Props> = memo((props) => {
@@ -21,6 +24,8 @@ export const UserTable: VFC<Props> = memo((props) => {
   } = useUserTable();
   const localizationJapanese = dataGridJaJP;
   const { toggleUserDialog, isDialogOpen } = useUserDialog();
+  const { toggleOperationDialog, isOperationDialogOpen } = useOperationDialog();
+  const { deleteUserMessage } = useMessage();
 
   //TODO:rendercellをどうにかしてhooksに持っていきたい
   const headers: any = [
@@ -43,6 +48,7 @@ export const UserTable: VFC<Props> = memo((props) => {
         <UserTableOperationButton
           user={param.row}
           toggleUserDialog={toggleUserDialog}
+          toggleOperationDialog={toggleOperationDialog}
           onClickDeleteButton={onClickDeleteButton}
           onClickEditButton={onClickEditButton}
         />
@@ -74,6 +80,16 @@ export const UserTable: VFC<Props> = memo((props) => {
         toggleUserDialog={() => toggleUserDialog()}
         isDialogOpen={isDialogOpen}
         user={selectedUser}
+      />
+      <OperationDialog
+        toggleOperationDialog={() => toggleOperationDialog()}
+        isDialogOpen={isOperationDialogOpen}
+        onClickCancel={() => {}}
+        onClickAction={() => {
+          /*削除処理*/
+        }}
+        title={"削除"}
+        message={deleteUserMessage(selectedUser)}
       />
     </>
   );

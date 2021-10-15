@@ -11,21 +11,23 @@ type Props = {
   onClickAction: () => void;
   onClickCancel: () => void;
   isDialogOpen: boolean;
-  toggleConfirmDialog: (isOpen?: boolean) => void;
-  cancelButtonColor?: string;
+  toggleOperationDialog: (isOpen?: boolean) => void;
   actionButtonColor?: string;
-  message?: string | ReactNode;
-  cancelButtonName?: string;
   actionButtonName?: string;
+  cancelButtonColor?: string;
+  cancelButtonName?: string;
+  message?: string | ReactNode;
+  title?: string;
 };
-export const ConfirmDialog: VFC<Props> = memo((props) => {
+export const OperationDialog: VFC<Props> = memo((props) => {
   const {
+    title,
     onClickAction,
     onClickCancel,
     cancelButtonColor = "inherit",
     actionButtonColor = "primary",
     isDialogOpen,
-    toggleConfirmDialog,
+    toggleOperationDialog,
     message,
     cancelButtonName = "キャンセル",
     actionButtonName = "OK",
@@ -33,11 +35,11 @@ export const ConfirmDialog: VFC<Props> = memo((props) => {
   return (
     <Dialog
       open={isDialogOpen}
-      onClose={() => toggleConfirmDialog(false)}
+      onClose={() => toggleOperationDialog(false)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"確認"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
       <DialogContent>{message}</DialogContent>
       <DialogActions>
         <OperationButton onClick={onClickCancel} color={cancelButtonColor}>

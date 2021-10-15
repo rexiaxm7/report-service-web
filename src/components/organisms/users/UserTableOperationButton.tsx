@@ -13,31 +13,39 @@ type Props = {
   onClickEditButton: (buttonProps: onClickButtonProps) => void;
   onClickDeleteButton: (buttonProps: onClickButtonProps) => void;
   toggleUserDialog: (isOpen?: boolean) => void;
+  toggleOperationDialog: (isOpen?: boolean) => void;
 };
 export const UserTableOperationButton: VFC<Props> = memo((props) => {
-  const { user, onClickEditButton, onClickDeleteButton, toggleUserDialog } =
-    props;
+  const {
+    user,
+    onClickEditButton,
+    onClickDeleteButton,
+    toggleUserDialog,
+    toggleOperationDialog,
+  } = props;
   return (
     <div>
-      <IconButton color={"success"}>
-        <EditIcon
-          onClick={() =>
-            onClickEditButton({
-              user,
-              onOpen: () => toggleUserDialog(true),
-            })
-          }
-        />
+      <IconButton
+        color={"success"}
+        onClick={() =>
+          onClickEditButton({
+            user,
+            onOpen: () => toggleUserDialog(true),
+          })
+        }
+      >
+        <EditIcon />
       </IconButton>
-      <IconButton color={"error"}>
-        <DeleteIcon
-          onClick={() =>
-            onClickDeleteButton({
-              user,
-              onOpen: () => toggleUserDialog(true),
-            })
-          }
-        />
+      <IconButton
+        color={"error"}
+        onClick={() =>
+          onClickDeleteButton({
+            user,
+            onOpen: () => toggleOperationDialog(true),
+          })
+        }
+      >
+        <DeleteIcon />
       </IconButton>
     </div>
   );
