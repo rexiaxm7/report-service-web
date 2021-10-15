@@ -1,6 +1,6 @@
 import React, { memo, useEffect, VFC } from "react";
 import { UserTableHeader } from "./UserTableHeader";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import dataGridJaJP from "./dataGridJaJP";
 import { useUsers } from "../../../hooks/useUsers";
 import { useUserTable } from "../../../hooks/useUserTable";
@@ -10,6 +10,7 @@ import { UserTableOperationButton } from "./UserTableOperationButton";
 import { OperationDialog } from "../../molecules/OperationDialog";
 import { useOperationDialog } from "../../../hooks/useOperationDialog";
 import { useMessage } from "../../../hooks/useMessage";
+import { DisplayUser } from "../../../types/User";
 
 type Props = {};
 export const UserTable: VFC<Props> = memo((props) => {
@@ -26,6 +27,10 @@ export const UserTable: VFC<Props> = memo((props) => {
   const { toggleUserDialog, isDialogOpen } = useUserDialog();
   const { toggleOperationDialog, isOperationDialogOpen } = useOperationDialog();
   const { deleteUserMessage } = useMessage();
+
+  const userDelete = (selectedUser: DisplayUser | null) => {
+    //削除処理
+  };
 
   //TODO:rendercellをどうにかしてhooksに持っていきたい
   const headers: any = [
@@ -66,6 +71,9 @@ export const UserTable: VFC<Props> = memo((props) => {
     <>
       <UserTableHeader />
       <DataGrid
+        components={{
+          Toolbar: GridToolbar,
+        }}
         disableColumnMenu
         autoHeight
         localeText={localizationJapanese}
@@ -84,10 +92,8 @@ export const UserTable: VFC<Props> = memo((props) => {
       <OperationDialog
         toggleOperationDialog={() => toggleOperationDialog()}
         isDialogOpen={isOperationDialogOpen}
-        onClickCancel={() => {}}
-        onClickAction={() => {
-          /*削除処理*/
-        }}
+        onClickCancel={() => toggleOperationDialog(false)}
+        onClickAction={() => userDelete(selectedUser)}
         title={"削除"}
         message={deleteUserMessage(selectedUser)}
       />
