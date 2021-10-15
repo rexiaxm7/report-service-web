@@ -39,6 +39,15 @@ export const UserTable: VFC<Props> = memo((props) => {
       disableClickEventBubbling: true,
     },
     {
+      field: "team_id",
+      headerName: "チームID",
+      sortable: false,
+      editable: false,
+      flex: 0.1,
+      minWidth: 110,
+      disableClickEventBubbling: true,
+    },
+    {
       field: "operation",
       headerName: " ",
       sortable: false,

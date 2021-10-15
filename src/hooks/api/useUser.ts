@@ -11,10 +11,11 @@ export const useUser = () => {
     api
       .get(`/users/${userId}`)
       .then((res) => {
-        const { id, name } = res.data;
+        const { id, name, team_id } = res.data;
         const displayUser: DisplayUser = {
           id,
           name,
+          team_id,
         };
         setUser(displayUser);
       })

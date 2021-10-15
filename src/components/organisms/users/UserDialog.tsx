@@ -23,13 +23,17 @@ export const UserDialog: VFC<Props> = memo((props) => {
   const {
     userName,
     setUserName,
+    setTeamId,
+    teamId,
     onChangeUserName,
+    onChangeTeamId,
     onClickCancel,
     onClickEditOrUpdate,
   } = useUserDialog();
 
   useEffect(() => {
     setUserName(user?.name ?? "");
+    setTeamId(user?.team_id ?? -1);
   }, [user]);
 
   return (
@@ -65,6 +69,16 @@ export const UserDialog: VFC<Props> = memo((props) => {
                     value={userName}
                     fullWidth
                     onChange={onChangeUserName}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputLabel htmlFor={"teamId"}>チームID</InputLabel>
+                  <Input
+                    type={"number"}
+                    id={"teamId"}
+                    value={teamId}
+                    fullWidth
+                    onChange={onChangeTeamId}
                   />
                 </Grid>
               </Grid>
