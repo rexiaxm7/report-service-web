@@ -19,8 +19,7 @@ type Props = {
   title?: string;
 };
 export const OperationDialog: VFC<Props> = memo((props) => {
-  const { isOperationModalOpen, setIsOperationModalOpen } =
-    useOperationDialog();
+  const { isOperationModalOpen, closeDialog } = useOperationDialog();
   const {
     title,
     onClickAction,
@@ -34,7 +33,7 @@ export const OperationDialog: VFC<Props> = memo((props) => {
   return (
     <Dialog
       open={isOperationModalOpen}
-      onClose={() => setIsOperationModalOpen(false)}
+      onClose={closeDialog}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >

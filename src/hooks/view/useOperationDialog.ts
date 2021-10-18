@@ -1,24 +1,35 @@
 import { useCallback, useContext } from "react";
-import { useMessage } from "./useMessage";
 import { OperationModalContext } from "../../providers/OperationModalProvider";
-import { UserModalContext } from "../../providers/UserModalProvider";
+import { SelectedUserContext } from "../../providers/SelectedUserProvider";
 
 export const useOperationDialog = () => {
-  const { showMessage } = useMessage();
   const useOperationModalContext = () => useContext(OperationModalContext);
-
   const { isOperationModalOpen, setIsOperationModalOpen } =
     useOperationModalContext();
 
-  const onClickOperation = useCallback((toggleDialog) => {}, []);
-  const onClickCancel = useCallback(() => {
+  const useSelectedUserContext = () => useContext(SelectedUserContext);
+  const { setSelectedUser } = useSelectedUserContext();
+
+  const closeDialog = useCallback(() => {
     setIsOperationModalOpen(false);
-  }, []);
+    setSelectedUser(null);
+  }, [setIsOperationModalOpen, setSelectedUser]);
+
+  const onClickOperation = useCallback(
+    (toggleDialog) => {
+      closeDialog();
+    },
+    [closeDialog]
+  );
+  const onClickCancel = useCallback(() => {
+    closeDialog();
+  }, [closeDialog]);
 
   return {
     isOperationModalOpen,
     setIsOperationModalOpen,
     onClickCancel,
     onClickOperation,
+    closeDialog,
   };
 };

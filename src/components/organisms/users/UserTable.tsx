@@ -1,4 +1,4 @@
-import React, { memo, useEffect, VFC } from "react";
+import React, { memo, useContext, useEffect, VFC } from "react";
 import { UserTableHeader } from "./UserTableHeader";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import dataGridJaJP from "./dataGridJaJP";
@@ -9,6 +9,8 @@ import { UserTableOperationButton } from "./UserTableOperationButton";
 import { OperationDialog } from "../../molecules/OperationDialog";
 import { useOperationDialog } from "../../../hooks/view/useOperationDialog";
 import { useMessage } from "../../../hooks/view/useMessage";
+import { MessageContext } from "../../../providers/MessageProvider";
+import { SelectedUserContext } from "../../../providers/SelectedUserProvider";
 
 type Props = {};
 export const UserTable: VFC<Props> = memo((props) => {
@@ -20,12 +22,19 @@ export const UserTable: VFC<Props> = memo((props) => {
     onClickDeleteButton,
     onClickEditButton,
     onClickActionButton,
-    selectedUser,
   } = useUserTable();
-  const { isOperationModalOpen, setIsOperationModalOpen } =
-    useOperationDialog();
+  const useSelectedUserContext = () => useContext(SelectedUserContext);
+  const { selectedUser } = useSelectedUserContext();
+  const { setIsOperationModalOpen } = useOperationDialog();
   const { deleteUserMessage } = useMessage();
   const localizationJapanese = dataGridJaJP;
+
+  const useMessageContext = () => useContext(MessageContext);
+  const { message } = useMessageContext();
+
+  useEffect(() => {
+    getUsers();
+  }, [message]);
 
   //TODO:rendercellをどうにかしてhooksに持っていきたい
   const headers: any = [
@@ -55,7 +64,7 @@ export const UserTable: VFC<Props> = memo((props) => {
       minWidth: 110,
       renderCell: (param: any) => (
         <UserTableOperationButton
-          user={param.row}
+          selectedUser={param.row}
           onClickDeleteButton={onClickDeleteButton}
           onClickEditButton={onClickEditButton}
         />
@@ -63,9 +72,6 @@ export const UserTable: VFC<Props> = memo((props) => {
       disableClickEventBubbling: true,
     },
   ];
-  useEffect(() => {
-    getUsers();
-  }, []);
 
   return (
     <>
@@ -84,10 +90,10 @@ export const UserTable: VFC<Props> = memo((props) => {
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         disableSelectionOnClick
       />
-      <UserDialog user={selectedUser} />
+      <UserDialog />
       <OperationDialog
         onClickCancel={() => setIsOperationModalOpen(false)}
-        onClickAction={() => onClickActionButton(selectedUser!)}
+        onClickAction={() => onClickActionButton(selectedUser)}
         title={"削除"}
         message={deleteUserMessage(selectedUser)}
       />

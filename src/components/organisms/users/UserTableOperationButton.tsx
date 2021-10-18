@@ -5,23 +5,32 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 type onClickButtonProps = {
-  user: DisplayUser;
+  selectedUser: DisplayUser;
 };
 type Props = {
-  user: DisplayUser;
+  selectedUser: DisplayUser;
   onClickEditButton: (buttonProps: onClickButtonProps) => void;
   onClickDeleteButton: (buttonProps: onClickButtonProps) => void;
 };
+
 export const UserTableOperationButton: VFC<Props> = memo((props) => {
-  const { user, onClickEditButton, onClickDeleteButton } = props;
+  const { selectedUser, onClickEditButton, onClickDeleteButton } = props;
   return (
-    <div>
-      <IconButton color={"success"} onClick={() => onClickEditButton({ user })}>
-        <EditIcon />
-      </IconButton>
-      <IconButton color={"error"} onClick={() => onClickDeleteButton({ user })}>
-        <DeleteIcon />
-      </IconButton>
-    </div>
+    <>
+      <div>
+        <IconButton
+          color={"success"}
+          onClick={() => onClickEditButton({ selectedUser })}
+        >
+          <EditIcon />
+        </IconButton>
+        <IconButton
+          color={"error"}
+          onClick={() => onClickDeleteButton({ selectedUser })}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </div>
+    </>
   );
 });

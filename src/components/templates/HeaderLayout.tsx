@@ -29,8 +29,8 @@ type sideMenuTypes = {
 };
 
 export const HeaderLayout: VFC<Props> = memo((props) => {
-  const useAPIErrorContext = () => useContext(MessageContext);
-  const { message, removeMessage } = useAPIErrorContext();
+  const useMessageContext = () => useContext(MessageContext);
+  const { message, removeMessage, visible } = useMessageContext();
   const { children } = props;
   const { isOpen, setIsOpen } = useSideMenu();
   const toggleDrawer = () => setIsOpen(!isOpen);
@@ -55,7 +55,7 @@ export const HeaderLayout: VFC<Props> = memo((props) => {
     <>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={!!message}
+        open={visible}
         autoHideDuration={3000}
         onClose={handleClose}
       >

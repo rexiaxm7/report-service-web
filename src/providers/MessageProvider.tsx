@@ -10,6 +10,7 @@ export type MessageContextType = {
   message: Message;
   addMessage: (message: Message) => void;
   removeMessage: () => void;
+  visible: boolean;
 };
 
 export const MessageContext = createContext<MessageContextType>(
@@ -19,15 +20,24 @@ export const MessageContext = createContext<MessageContextType>(
 export const MessageProvider = (props: { children: ReactNode }) => {
   const { children } = props;
   const [message, setMessage] = useState<Message>(null);
+  const [visible, setVisible] = useState<boolean>(false);
 
-  const removeMessage = () => setMessage(null);
-  const addMessage = (message: Message) =>
+  const addMessage = (message: Message) => {
     setMessage({ message: message!.message, status: message!.status });
+    setVisible(true);
+  };
+
+  const removeMessage = () => {
+    setVisible(false);
+    //Snackbarのアニメーション中にメッセージがnullになると色が変わるのでアニメーションが終わるまで待機する
+    setTimeout(() => setMessage(null), 400);
+  };
 
   const contextValue = {
     message: message,
     addMessage,
     removeMessage,
+    visible,
   };
 
   return (

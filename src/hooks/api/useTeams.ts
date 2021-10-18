@@ -1,9 +1,7 @@
 import { useCallback, useState } from "react";
-import { useMessage } from "../view/useMessage";
 import { DisplayTeam } from "../../types/Team";
 
 export const useTeams = () => {
-  const { showMessage } = useMessage();
   const [teams, setTeams] = useState<Array<DisplayTeam>>([]);
   const getTeams = useCallback(() => {
     console.log("getTeams");

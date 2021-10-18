@@ -1,11 +1,12 @@
 import { ChangeEvent, useCallback, useContext, useState } from "react";
-import { useMessage } from "./useMessage";
 import { useUser } from "../api/useUser";
 import { DisplayUser, RegisterUser } from "../../types/User";
 import { UserModalContext } from "../../providers/UserModalProvider";
+import { SelectedUserContext } from "../../providers/SelectedUserProvider";
 
 export const useUserDialog = () => {
-  const { showMessage } = useMessage();
+  const useSelectedUserContext = () => useContext(SelectedUserContext);
+  const { setSelectedUser } = useSelectedUserContext();
   const { updateUser, registerUser } = useUser();
 
   const useModalContext = () => useContext(UserModalContext);
@@ -22,7 +23,8 @@ export const useUserDialog = () => {
 
   const closeDialog = useCallback(() => {
     setIsUserModalOpen(false);
-  }, [setIsUserModalOpen]);
+    setSelectedUser(null);
+  }, [setIsUserModalOpen, setSelectedUser]);
 
   const onClickUpdate = useCallback(
     (id) => {

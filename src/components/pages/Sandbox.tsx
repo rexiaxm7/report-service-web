@@ -1,7 +1,5 @@
 import React, { memo, useEffect, VFC } from "react";
-import { OperationButton } from "../atoms/buttons/OperationButton";
-import { Container, Grid, Pagination } from "@mui/material";
-import { OperationDialog } from "../molecules/OperationDialog";
+import { Container, Grid } from "@mui/material";
 import { useUser } from "../../hooks/api/useUser";
 
 export const Sandbox: VFC = memo(() => {
@@ -9,7 +7,7 @@ export const Sandbox: VFC = memo(() => {
     getUser(1);
   }, []);
 
-  const { getUser, user } = useUser();
+  const { getUser } = useUser();
   return (
     <Container>
       <Grid

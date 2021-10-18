@@ -1,4 +1,4 @@
-import { memo, useEffect, VFC } from "react";
+import { memo, useContext, useEffect, VFC } from "react";
 import {
   Dialog,
   DialogActions,
@@ -9,18 +9,15 @@ import {
   InputLabel,
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
-import { DisplayUser } from "../../../types/User";
 import { useUserDialog } from "../../../hooks/view/useUserDialog";
-import { useUserTable } from "../../../hooks/view/useUserTable";
+import { SelectedUserContext } from "../../../providers/SelectedUserProvider";
 
-type Props = {
-  user: DisplayUser | null;
-};
+type Props = {};
 
 export const UserDialog: VFC<Props> = memo((props) => {
-  const { user } = props;
+  const useSelectedUserContext = () => useContext(SelectedUserContext);
+  const { selectedUser } = useSelectedUserContext();
   const { isUserModalOpen, setIsUserModalOpen } = useUserDialog();
-  const { setSelectedUser } = useUserTable();
 
   const {
     userName,
@@ -33,22 +30,16 @@ export const UserDialog: VFC<Props> = memo((props) => {
     onClickUpdate,
     onClickRegister,
   } = useUserDialog();
-  const { selectedUser } = useUserTable();
 
   useEffect(() => {
-    setUserName(user?.name ?? "");
-    setTeamId(user?.team_id ?? 0);
-  }, [user]);
+    setUserName(selectedUser?.name ?? "");
+    setTeamId(selectedUser?.team_id ?? 0);
+  }, [selectedUser]);
 
-  useEffect(() => {
-    setSelectedUser(null);
-  }, [isUserModalOpen]);
+  useEffect(() => {}, []);
 
   return (
-    // チーム名
-    //所属ユーザー変更
-    //更新ボタン
-    <div>
+    <>
       <Dialog
         open={isUserModalOpen}
         onClose={() => setIsUserModalOpen(false)}
@@ -65,7 +56,7 @@ export const UserDialog: VFC<Props> = memo((props) => {
                     <InputLabel htmlFor={"userId"}>ユーザーID</InputLabel>
                     <Input
                       id={"userId"}
-                      value={user?.id}
+                      value={selectedUser?.id}
                       readOnly
                       disableUnderline
                       fullWidth
@@ -100,9 +91,10 @@ export const UserDialog: VFC<Props> = memo((props) => {
           <OperationButton onClick={() => onClickCancel()} color="inherit">
             キャンセル
           </OperationButton>
+          {selectedUser}
           <OperationButton
             onClick={() =>
-              selectedUser ? onClickUpdate(user?.id) : onClickRegister()
+              selectedUser ? onClickUpdate(selectedUser?.id) : onClickRegister()
             }
             color="primary"
           >
@@ -110,6 +102,6 @@ export const UserDialog: VFC<Props> = memo((props) => {
           </OperationButton>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 });

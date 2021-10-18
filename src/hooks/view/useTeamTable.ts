@@ -3,7 +3,6 @@ import { useMessage } from "./useMessage";
 import { useUserDialog } from "./useUserDialog";
 
 export const useTeamTable = () => {
-  const { showMessage } = useMessage();
   //テーブルの行数
   const [pageSize, setPageSize] = useState(10);
   const rowsPerPageOptions = [10, 25, 50, 100];

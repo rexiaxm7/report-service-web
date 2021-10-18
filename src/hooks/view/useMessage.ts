@@ -5,8 +5,8 @@ import { ResponseStatus } from "../../types/api/ResponseStatus";
 import { MessageContext } from "../../providers/MessageProvider";
 
 export const useMessage = () => {
-  const useErrorContext = () => useContext(MessageContext);
-  const { message, addMessage, removeMessage } = useErrorContext();
+  const useMessageContext = () => useContext(MessageContext);
+  const { message, addMessage, removeMessage } = useMessageContext();
   const useMessageModalContext = () => useContext(MessageModalContext);
   const { setIsMessageModalOpen, isMessageModalOpen } =
     useMessageModalContext();
