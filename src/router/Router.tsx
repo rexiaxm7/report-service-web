@@ -16,8 +16,8 @@ export const Router: VFC = memo(() => {
     <Switch>
       <SideMenuProvider>
         <MessageModalProvider>
-          <UserModalProvider>
-            <OperationModalProvider>
+          <OperationModalProvider>
+            <UserModalProvider>
               <Route exact path="/">
                 <Users />
               </Route>
@@ -56,8 +56,8 @@ export const Router: VFC = memo(() => {
                   </Switch>
                 )}
               />
-            </OperationModalProvider>
-          </UserModalProvider>
+            </UserModalProvider>
+          </OperationModalProvider>
         </MessageModalProvider>
       </SideMenuProvider>
       <Route path="*">{<Page404 />}</Route>

@@ -11,6 +11,7 @@ import {
 import { OperationButton } from "../../atoms/buttons/OperationButton";
 import { DisplayUser } from "../../../types/User";
 import { useUserDialog } from "../../../hooks/view/useUserDialog";
+import { useUserTable } from "../../../hooks/view/useUserTable";
 
 type Props = {
   user: DisplayUser | null;
@@ -19,6 +20,7 @@ type Props = {
 export const UserDialog: VFC<Props> = memo((props) => {
   const { user } = props;
   const { isUserModalOpen, setIsUserModalOpen } = useUserDialog();
+  const { setSelectedUser } = useUserTable();
 
   const {
     userName,
@@ -28,13 +30,19 @@ export const UserDialog: VFC<Props> = memo((props) => {
     onChangeUserName,
     onChangeTeamId,
     onClickCancel,
-    onClickEditOrUpdate,
+    onClickUpdate,
+    onClickRegister,
   } = useUserDialog();
+  const { selectedUser } = useUserTable();
 
   useEffect(() => {
     setUserName(user?.name ?? "");
-    setTeamId(user?.team_id ?? -1);
+    setTeamId(user?.team_id ?? 0);
   }, [user]);
+
+  useEffect(() => {
+    setSelectedUser(null);
+  }, [isUserModalOpen]);
 
   return (
     // チーム名
@@ -90,10 +98,12 @@ export const UserDialog: VFC<Props> = memo((props) => {
             キャンセル
           </OperationButton>
           <OperationButton
-            onClick={() => onClickEditOrUpdate(user?.id)}
+            onClick={() =>
+              selectedUser ? onClickUpdate(user?.id) : onClickRegister()
+            }
             color="primary"
           >
-            更新
+            {selectedUser ? "更新" : "登録"}
           </OperationButton>
         </DialogActions>
       </Dialog>

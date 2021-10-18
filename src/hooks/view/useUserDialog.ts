@@ -12,7 +12,7 @@ export const useUserDialog = () => {
   const { isUserModalOpen, setIsUserModalOpen } = useModalContext();
 
   const [userName, setUserName] = useState<string>("");
-  const [teamId, setTeamId] = useState<number>(-1);
+  const [teamId, setTeamId] = useState<number>(0);
   const onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
   };
@@ -20,10 +20,9 @@ export const useUserDialog = () => {
     setTeamId(Number(e.target.value));
   };
 
-  const [isEdit, setIsEdit] = useState<Boolean>(true);
-  const onClickEditOrUpdate = (id?: number) => {
-    isEdit ? onClickUpdate(id) : onClickRegister();
-  };
+  const closeDialog = useCallback(() => {
+    setIsUserModalOpen(false);
+  }, [setIsUserModalOpen]);
 
   const onClickUpdate = useCallback(
     (id) => {
@@ -33,9 +32,9 @@ export const useUserDialog = () => {
         team_id: teamId,
       };
       updateUser(target);
-      setIsUserModalOpen(false);
+      closeDialog();
     },
-    [setIsUserModalOpen, teamId, updateUser, userName]
+    [closeDialog, teamId, updateUser, userName]
   );
 
   const onClickRegister = useCallback(() => {
@@ -44,12 +43,12 @@ export const useUserDialog = () => {
       team_id: teamId,
     };
     registerUser(target);
-    setIsUserModalOpen(false);
-  }, [registerUser, setIsUserModalOpen, teamId, userName]);
+    closeDialog();
+  }, [closeDialog, registerUser, teamId, userName]);
 
   const onClickCancel = useCallback(() => {
-    setIsUserModalOpen(false);
-  }, [setIsUserModalOpen]);
+    closeDialog();
+  }, [closeDialog]);
 
   return {
     userName,
@@ -60,8 +59,7 @@ export const useUserDialog = () => {
     onChangeTeamId,
     onClickCancel,
     onClickUpdate,
-    onClickEditOrUpdate,
-    setIsEdit,
+    onClickRegister,
     isUserModalOpen,
     setIsUserModalOpen,
   };

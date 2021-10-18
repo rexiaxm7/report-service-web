@@ -1,9 +1,9 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useState } from "react";
 import { useMessage } from "./useMessage";
 import { DisplayUser } from "../../types/User";
 import { useUser } from "../api/useUser";
 import { useUserDialog } from "./useUserDialog";
-import { MessageModalContext } from "../../providers/MessageModalProvider";
+import { useOperationDialog } from "./useOperationDialog";
 
 export type OnClickButtonProps = {
   user: DisplayUser;
@@ -13,7 +13,7 @@ export const useUserTable = () => {
   const { showMessage } = useMessage();
   const { deleteUser } = useUser();
   const { setIsUserModalOpen } = useUserDialog();
-  const { setIsMessageModalOpen, isMessageModalOpen } = useMessage();
+  const { setIsOperationModalOpen } = useOperationDialog();
 
   //ユーザー選択
   const [selectedUser, setSelectedUser] = useState<DisplayUser | null>(null);
@@ -23,30 +23,36 @@ export const useUserTable = () => {
   const rowsPerPageOptions = [10, 25, 50, 100];
 
   //テーブルのボタン操作
-  const onClickEditButton = useCallback((props: OnClickButtonProps) => {
-    console.log("onClickEditButton");
-    const { user } = props;
-    console.log(props);
-    setSelectedUser(user);
-    setIsUserModalOpen(true);
-  }, []);
+  const onClickEditButton = useCallback(
+    (props: OnClickButtonProps) => {
+      console.log("onClickEditButton");
+      const { user } = props;
+      console.log(props);
+      setSelectedUser(user);
+      setIsUserModalOpen(true);
+    },
+    [setIsUserModalOpen]
+  );
 
   const onClickAddButton = useCallback(() => {
     console.log("onClickAddButton");
+
     setSelectedUser(null);
     setIsUserModalOpen(true);
-  }, []);
+  }, [setIsUserModalOpen]);
 
-  const onClickDeleteButton = useCallback((props: OnClickButtonProps) => {
-    console.log("onClickDeleteButton");
-    const { user } = props;
-    setSelectedUser(user);
-    setIsMessageModalOpen(true);
-  }, []);
+  const onClickDeleteButton = useCallback(
+    (props: OnClickButtonProps) => {
+      const { user } = props;
+      setSelectedUser(user);
+      setIsOperationModalOpen(true);
+    },
+    [setIsOperationModalOpen]
+  );
 
   const onClickActionButton = useCallback(
     (selectedUser: DisplayUser | null) => deleteUser(selectedUser!.id),
-    []
+    [deleteUser]
   );
 
   return {
