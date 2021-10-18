@@ -91,7 +91,6 @@ export const UserDialog: VFC<Props> = memo((props) => {
           <OperationButton onClick={() => onClickCancel()} color="inherit">
             キャンセル
           </OperationButton>
-          {selectedUser}
           <OperationButton
             onClick={() =>
               selectedUser ? onClickUpdate(selectedUser?.id) : onClickRegister()

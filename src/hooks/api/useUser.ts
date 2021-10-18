@@ -3,12 +3,11 @@ import api from "../../axios";
 import { useMessage } from "../view/useMessage";
 import { DisplayUser, RegisterUser } from "../../types/User";
 import { MessageContext } from "../../providers/MessageProvider";
-import { ResponseStatus } from "../../types/api/ResponseStatus";
 
 export const useUser = () => {
   const useMessageContext = () => useContext(MessageContext);
   const { addMessage } = useMessageContext();
-  const { showMessage } = useMessage();
+  const { createMessage } = useMessage();
   const [user, setUser] = useState<DisplayUser | null>(null);
   const getUser = useCallback(
     (userId: number) => {
@@ -20,9 +19,9 @@ export const useUser = () => {
           const displayUser: DisplayUser = { id, name, team_id };
           setUser(displayUser);
         })
-        .catch((e) => showMessage(e.message, e.statusCode));
+        .catch((e) => createMessage(e));
     },
-    [showMessage]
+    [createMessage]
   );
 
   const registerUser = useCallback(
@@ -32,16 +31,11 @@ export const useUser = () => {
         .post(`/users`, user)
         .then((res) => {
           setUser(null);
-          const { statusText, status } = res;
-          const statusCode = status as ResponseStatus;
-          addMessage({
-            message: statusText || "ユーザーの登録に成功しました",
-            status: statusCode,
-          });
+          createMessage(res, "ユーザーの登録に成功しました");
         })
-        .catch((e) => showMessage(e.message, e.statusCode));
+        .catch((e) => createMessage(e, "ユーザーの登録に失敗しました"));
     },
-    [addMessage, showMessage]
+    [createMessage]
   );
 
   const updateUser = useCallback(
@@ -49,11 +43,13 @@ export const useUser = () => {
       api
         .put(`/users/${user.id}`, user)
         .then((res) => {
-          getUser(user.id);
+          createMessage(res, "ユーザーの更新に成功しました");
         })
-        .catch((e) => showMessage(e.message, e.statusCode));
+        .catch((e) => {
+          createMessage(e, "ユーザーの更新に失敗しました");
+        });
     },
-    [getUser, showMessage]
+    [getUser]
   );
 
   const deleteUser = useCallback(
@@ -61,20 +57,10 @@ export const useUser = () => {
       api
         .delete(`/users/${userId}`)
         .then((res) => {
-          const { statusText, status } = res;
-          const statusCode = status as ResponseStatus;
-          addMessage({
-            message: statusText || "ユーザーの削除に成功しました",
-            status: statusCode,
-          });
+          createMessage(res, "ユーザーの削除に成功しました");
         })
         .catch((e) => {
-          const { statusText, status } = e;
-          const statusCode = status as ResponseStatus;
-          addMessage({
-            message: statusText || "ユーザーの削除に失敗しました",
-            status: statusCode,
-          });
+          createMessage(e, "ユーザーの削除に失敗しました");
         })
         .finally(() => setUser(null));
     },

@@ -11,6 +11,21 @@ export const useMessage = () => {
   const { setIsMessageModalOpen, isMessageModalOpen } =
     useMessageModalContext();
 
+  const createMessage = (response: any, customMessage = "") => {
+    //error
+    if (response.message) {
+      const { message, statusCode } = response;
+      const code = statusCode as ResponseStatus;
+      showMessage(customMessage || message, code);
+    }
+    //success
+    else {
+      const { statusText, status } = response;
+      const code = status as ResponseStatus;
+      showMessage(customMessage || statusText, code);
+    }
+  };
+
   const showMessage = (msg: string, status: ResponseStatus) => {
     if (message) {
       removeMessage();
@@ -24,7 +39,7 @@ export const useMessage = () => {
   return {
     setIsMessageModalOpen,
     isMessageModalOpen,
-    showMessage,
+    createMessage,
     deleteUserMessage,
   };
 };

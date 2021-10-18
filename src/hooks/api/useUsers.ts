@@ -4,7 +4,7 @@ import { DisplayUser } from "../../types/User";
 import api from "../../axios";
 
 export const useUsers = () => {
-  const { showMessage } = useMessage();
+  const { createMessage } = useMessage();
   const [users, setUsers] = useState<Array<DisplayUser>>([]);
 
   const getUsers = useCallback(() => {
@@ -12,8 +12,8 @@ export const useUsers = () => {
     api
       .get<Array<DisplayUser>>(`/users`)
       .then((res) => setUsers(res.data))
-      .catch((e) => showMessage(e.message, e.statusCode));
-  }, [showMessage]);
+      .catch((e) => createMessage(e, "ユーザー一覧の取得に失敗しました"));
+  }, []);
 
   return { users, getUsers, setUsers };
 };

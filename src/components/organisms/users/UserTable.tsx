@@ -5,12 +5,14 @@ import dataGridJaJP from "./dataGridJaJP";
 import { useUsers } from "../../../hooks/api/useUsers";
 import { useUserTable } from "../../../hooks/view/useUserTable";
 import { UserDialog } from "./UserDialog";
-import { UserTableOperationButton } from "./UserTableOperationButton";
 import { OperationDialog } from "../../molecules/OperationDialog";
 import { useOperationDialog } from "../../../hooks/view/useOperationDialog";
 import { useMessage } from "../../../hooks/view/useMessage";
 import { MessageContext } from "../../../providers/MessageProvider";
 import { SelectedUserContext } from "../../../providers/SelectedUserProvider";
+import { IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 type Props = {};
 export const UserTable: VFC<Props> = memo((props) => {
@@ -33,7 +35,8 @@ export const UserTable: VFC<Props> = memo((props) => {
   const { message } = useMessageContext();
 
   useEffect(() => {
-    getUsers();
+    //そのまま書くと何故か描画されない
+    setTimeout(() => getUsers(), 0);
   }, [message]);
 
   //TODO:rendercellをどうにかしてhooksに持っていきたい
@@ -62,13 +65,27 @@ export const UserTable: VFC<Props> = memo((props) => {
       editable: false,
       flex: 0.1,
       minWidth: 110,
-      renderCell: (param: any) => (
-        <UserTableOperationButton
-          selectedUser={param.row}
-          onClickDeleteButton={onClickDeleteButton}
-          onClickEditButton={onClickEditButton}
-        />
-      ),
+      renderCell: (param: any) => {
+        const selectedUser = param.row;
+        return (
+          <>
+            <div>
+              <IconButton
+                color={"success"}
+                onClick={() => onClickEditButton({ selectedUser })}
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton
+                color={"error"}
+                onClick={() => onClickDeleteButton({ selectedUser })}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </div>
+          </>
+        );
+      },
       disableClickEventBubbling: true,
     },
   ];
@@ -76,20 +93,23 @@ export const UserTable: VFC<Props> = memo((props) => {
   return (
     <>
       <UserTableHeader />
-      <DataGrid
-        components={{
-          Toolbar: GridToolbar,
-        }}
-        disableColumnMenu
-        autoHeight
-        localeText={localizationJapanese}
-        rows={users}
-        columns={headers}
-        pageSize={pageSize}
-        rowsPerPageOptions={rowsPerPageOptions}
-        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        disableSelectionOnClick
-      />
+      <div style={{ width: "100%" }}>
+        <DataGrid
+          sortModel={[{ field: "id", sort: "asc" }]}
+          components={{
+            Toolbar: GridToolbar,
+          }}
+          disableColumnMenu
+          autoHeight
+          localeText={localizationJapanese}
+          rows={users}
+          columns={headers}
+          pageSize={pageSize}
+          rowsPerPageOptions={rowsPerPageOptions}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          disableSelectionOnClick
+        />
+      </div>
       <UserDialog />
       <OperationDialog
         onClickCancel={() => setIsOperationModalOpen(false)}

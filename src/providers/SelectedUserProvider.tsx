@@ -18,8 +18,9 @@ export const SelectedUserContext = createContext<SelectedUserContextType>(
 export const SelectedUserProvider = (props: { children: ReactNode }) => {
   const { children } = props;
   const [selectedUser, setSelectedUser] = useState<DisplayUser | null>(null);
+  const contextValue = { selectedUser, setSelectedUser };
   return (
-    <SelectedUserContext.Provider value={{ selectedUser, setSelectedUser }}>
+    <SelectedUserContext.Provider value={contextValue}>
       {children}
     </SelectedUserContext.Provider>
   );
