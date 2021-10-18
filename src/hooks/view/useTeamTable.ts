@@ -1,22 +1,25 @@
 import { useState } from "react";
 import { useMessage } from "./useMessage";
+import { useUserDialog } from "./useUserDialog";
 
 export const useTeamTable = () => {
-  const { showMessage } = useMessage();
   //テーブルの行数
   const [pageSize, setPageSize] = useState(10);
   const rowsPerPageOptions = [10, 25, 50, 100];
+  const { setIsMessageModalOpen } = useMessage();
+  const { setIsUserModalOpen } = useUserDialog();
 
-  const editTeam = (id: number) => {};
-  const deleteTeam = (id: number) => {};
   //編集ボタンのクリック
   const onClickEditButton = (id: number) => {
-    editTeam(id);
+    console.log("onClickEditButton");
+    setIsUserModalOpen(true);
   };
   //削除ボタンのクリック
   const onClickDeleteButton = (id: number) => {
-    deleteTeam(id);
+    console.log("onClickDeleteButton");
+    setIsMessageModalOpen(true);
   };
+
   return {
     pageSize,
     setPageSize,

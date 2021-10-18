@@ -1,15 +1,14 @@
 import { useCallback, useState } from "react";
-import { useMessage } from "./useMessage";
-import { DisplayTeam } from "../types/Team";
+import { DisplayTeam } from "../../types/Team";
 
 export const useTeams = () => {
-  const { showMessage } = useMessage();
   const [teams, setTeams] = useState<Array<DisplayTeam>>([]);
   const getTeams = useCallback(() => {
+    console.log("getTeams");
     // api
     //   .get<Array<User>>("/users")
     //   .then((res) => setUsers(res.data))
-    //   .catch((e) => showMessage(e.message));
+    //   .catch((e) => showMessage(e.message , e.statusCode));
     return [
       { id: 1, name: "チーム1" },
       { id: 2, name: "チーム2" },

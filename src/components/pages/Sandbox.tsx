@@ -1,13 +1,13 @@
-import React, { memo, VFC } from "react";
-import { OperationButton } from "../atoms/buttons/OperationButton";
-import { Container, Grid, Pagination } from "@mui/material";
-import { UserTable } from "../organisms/users/UserTable";
-import { MonthlyReport } from "./MonthlyReport";
-import { MonthlyReportForm } from "../organisms/monthlyreport/MonthlyReportForm";
-import { TeamDialog } from "../organisms/teams/TeamDialog";
-import { UserDialog } from "../organisms/users/UserDialog";
+import React, { memo, useEffect, VFC } from "react";
+import { Container, Grid } from "@mui/material";
+import { useUser } from "../../hooks/api/useUser";
 
 export const Sandbox: VFC = memo(() => {
+  useEffect(() => {
+    getUser(1);
+  }, []);
+
+  const { getUser } = useUser();
   return (
     <Container>
       <Grid
@@ -18,16 +18,7 @@ export const Sandbox: VFC = memo(() => {
         container
         spacing={2}
       >
-        <Grid direction={"column"} item xs={6}>
-          <OperationButton onClick={() => {}}>ボタン名</OperationButton>
-        </Grid>
-        <Grid direction={"column"} item xs={6}>
-          <Pagination color={"primary"} />
-        </Grid>
-        <Grid direction={"column"} item xs={12}>
-          <TeamDialog id={1}></TeamDialog>
-          <UserDialog id={1}></UserDialog>
-        </Grid>
+        <Grid direction={"column"} item xs={6}></Grid>
       </Grid>
     </Container>
   );

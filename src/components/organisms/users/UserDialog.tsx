@@ -1,6 +1,5 @@
-import { memo, useState, VFC } from "react";
+import { memo, useContext, useEffect, VFC } from "react";
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -10,60 +9,78 @@ import {
   InputLabel,
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
+import { useUserDialog } from "../../../hooks/view/useUserDialog";
+import { SelectedUserContext } from "../../../providers/SelectedUserProvider";
 
-type Props = {
-  id: number;
-};
+type Props = {};
+
 export const UserDialog: VFC<Props> = memo((props) => {
-  const { id } = props;
-  const [open, setOpen] = useState(false); // 確認ダイアログの表示/非表示
+  const useSelectedUserContext = () => useContext(SelectedUserContext);
+  const { selectedUser } = useSelectedUserContext();
+  const { isUserModalOpen, setIsUserModalOpen } = useUserDialog();
 
-  const updateUser = (id: number) => {
-    /*更新処理*/
-    console.log(id);
-  };
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const {
+    userName,
+    setUserName,
+    setTeamId,
+    teamId,
+    onChangeUserName,
+    onChangeTeamId,
+    onClickCancel,
+    onClickUpdate,
+    onClickRegister,
+  } = useUserDialog();
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  useEffect(() => {
+    setUserName(selectedUser?.name ?? "");
+    setTeamId(selectedUser?.team_id ?? 0);
+  }, [selectedUser]);
 
-  const deleteRow = (id: number, e: any) => {
-    // (ここで削除処理)
-    setOpen(false);
-  };
-  //日付
-  //テキストエリア
-  //キャンセルボタン
-  //操作ボタン
+  useEffect(() => {}, []);
+
   return (
-    // チーム名
-    //所属ユーザー変更
-    //更新ボタン
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleOpen}>
-        削除
-      </Button>
+    <>
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={isUserModalOpen}
+        onClose={() => setIsUserModalOpen(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"確認"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"編集"}</DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Grid container spacing={3}>
+                {selectedUser && (
+                  <Grid item xs={12}>
+                    <InputLabel htmlFor={"userId"}>ユーザーID</InputLabel>
+                    <Input
+                      id={"userId"}
+                      value={selectedUser?.id}
+                      readOnly
+                      disableUnderline
+                      fullWidth
+                    />
+                  </Grid>
+                )}
+
                 <Grid item xs={12}>
                   <InputLabel htmlFor={"userName"}>ユーザー名</InputLabel>
                   <Input
                     id={"userName"}
-                    value={"苗字 名前"}
-                    disableUnderline={true}
+                    value={userName}
                     fullWidth
+                    onChange={onChangeUserName}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputLabel htmlFor={"teamId"}>チームID</InputLabel>
+                  <Input
+                    type={"number"}
+                    id={"teamId"}
+                    value={teamId}
+                    fullWidth
+                    onChange={onChangeTeamId}
                   />
                 </Grid>
               </Grid>
@@ -71,14 +88,19 @@ export const UserDialog: VFC<Props> = memo((props) => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <OperationButton onClick={handleClose} color="inherit">
+          <OperationButton onClick={() => onClickCancel()} color="inherit">
             キャンセル
           </OperationButton>
-          <OperationButton onClick={() => updateUser(1)} color="primary">
-            更新
+          <OperationButton
+            onClick={() =>
+              selectedUser ? onClickUpdate(selectedUser?.id) : onClickRegister()
+            }
+            color="primary"
+          >
+            {selectedUser ? "更新" : "登録"}
           </OperationButton>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 });

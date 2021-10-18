@@ -1,7 +1,7 @@
 import React, { memo, useCallback, VFC } from "react";
 import { useHistory } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { AppBar, Box, Toolbar, IconButton, Typography } from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
 type Props = {

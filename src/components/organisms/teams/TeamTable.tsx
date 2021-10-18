@@ -5,8 +5,8 @@ import dataGridJaJP from "../users/dataGridJaJP";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
-import { useTeams } from "../../../hooks/useTeams";
-import { useTeamTable } from "../../../hooks/useTeamTable";
+import { useTeams } from "../../../hooks/api/useTeams";
+import { useTeamTable } from "../../../hooks/view/useTeamTable";
 
 type Props = {};
 export const TeamTable: VFC<Props> = memo((props) => {
