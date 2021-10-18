@@ -60,16 +60,19 @@ export const UserDialog: VFC<Props> = memo((props) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <InputLabel htmlFor={"userId"}>ユーザーID</InputLabel>
-                  <Input
-                    id={"userId"}
-                    value={user?.id}
-                    readOnly
-                    disableUnderline
-                    fullWidth
-                  />
-                </Grid>
+                {selectedUser && (
+                  <Grid item xs={12}>
+                    <InputLabel htmlFor={"userId"}>ユーザーID</InputLabel>
+                    <Input
+                      id={"userId"}
+                      value={user?.id}
+                      readOnly
+                      disableUnderline
+                      fullWidth
+                    />
+                  </Grid>
+                )}
+
                 <Grid item xs={12}>
                   <InputLabel htmlFor={"userName"}>ユーザー名</InputLabel>
                   <Input

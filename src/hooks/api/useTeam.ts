@@ -11,7 +11,7 @@ export const useTeam = () => {
     api
       .get<Array<Team>>(`/team/${id}`)
       .then((res) => setTeam(res.data))
-      .catch((e) => showMessage(e.message));
+      .catch((e) => showMessage(e.message, e.statusCode));
   }, []);
   return { team, getTeam };
 };

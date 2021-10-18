@@ -13,7 +13,7 @@ export const useUsers = () => {
     api
       .get<Array<DisplayUser>>(`/users`)
       .then((res) => setUsers(res.data))
-      .catch((e) => showMessage(e.message));
+      .catch((e) => showMessage(e.message, e.statusCode));
   }, []);
 
   return { users, getUsers, setUsers };

@@ -1,14 +1,21 @@
 import { DisplayUser } from "../../types/User";
 import { useContext } from "react";
 import { MessageModalContext } from "../../providers/MessageModalProvider";
+import { ResponseStatus } from "../../types/api/ResponseStatus";
+import { MessageContext } from "../../providers/MessageProvider";
 
 export const useMessage = () => {
+  const useErrorContext = () => useContext(MessageContext);
+  const { message, addMessage, removeMessage } = useErrorContext();
   const useMessageModalContext = () => useContext(MessageModalContext);
   const { setIsMessageModalOpen, isMessageModalOpen } =
     useMessageModalContext();
 
-  const showMessage = (message: string) => {
-    alert(message);
+  const showMessage = (msg: string, status: ResponseStatus) => {
+    if (message) {
+      removeMessage();
+    }
+    addMessage({ message: msg, status });
   };
 
   const deleteUserMessage = (user?: DisplayUser | null) =>

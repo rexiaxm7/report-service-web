@@ -10,7 +10,7 @@ export const useTeams = () => {
     // api
     //   .get<Array<User>>("/users")
     //   .then((res) => setUsers(res.data))
-    //   .catch((e) => showMessage(e.message));
+    //   .catch((e) => showMessage(e.message , e.statusCode));
     return [
       { id: 1, name: "チーム1" },
       { id: 2, name: "チーム2" },

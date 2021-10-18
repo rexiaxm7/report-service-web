@@ -19,7 +19,7 @@ export const useUser = () => {
         };
         setUser(displayUser);
       })
-      .catch((e) => showMessage(e.message));
+      .catch((e) => showMessage(e.message, e.statusCode));
   }, []);
 
   const registerUser = useCallback((user: RegisterUser) => {
@@ -29,7 +29,7 @@ export const useUser = () => {
       .then((res) => {
         setUser(null);
       })
-      .catch((e) => showMessage(e.message));
+      .catch((e) => showMessage(e.message, e.statusCode));
   }, []);
 
   const updateUser = useCallback((user: DisplayUser) => {
@@ -38,7 +38,7 @@ export const useUser = () => {
       .then((res) => {
         getUser(user.id);
       })
-      .catch((e) => showMessage(e.message));
+      .catch((e) => showMessage(e.message, e.statusCode));
   }, []);
 
   const deleteUser = useCallback((userId: number) => {
@@ -47,7 +47,7 @@ export const useUser = () => {
       .then((res) => {
         setUser(null);
       })
-      .catch((e) => showMessage(e.message));
+      .catch((e) => showMessage(e.message, e.statusCode));
   }, []);
 
   return { user, getUser, updateUser, deleteUser, registerUser };
