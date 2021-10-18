@@ -99,11 +99,11 @@ export const UserTable: VFC<Props> = memo((props) => {
           components={{
             Toolbar: GridToolbar,
           }}
+          rows={users}
+          columns={headers}
           disableColumnMenu
           autoHeight
           localeText={localizationJapanese}
-          rows={users}
-          columns={headers}
           pageSize={pageSize}
           rowsPerPageOptions={rowsPerPageOptions}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
