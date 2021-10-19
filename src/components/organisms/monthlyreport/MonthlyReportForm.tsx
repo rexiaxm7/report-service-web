@@ -26,6 +26,7 @@ export const MonthlyReportForm: VFC<Props> = memo((props) => {
     onClickRegister,
     onClickCancel,
     registerReportMessage,
+    toggleShowPreview,
   } = useMonthlyReportForm();
 
   return (
@@ -35,7 +36,12 @@ export const MonthlyReportForm: VFC<Props> = memo((props) => {
           <Grid container justifyContent={"end"}>
             <Grid item>
               <FormControlLabel
-                control={<Checkbox value={isShowPreview} />}
+                control={
+                  <Checkbox
+                    value={isShowPreview}
+                    onChange={toggleShowPreview}
+                  />
+                }
                 label="プレビュー"
               />
             </Grid>
