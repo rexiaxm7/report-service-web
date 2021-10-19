@@ -48,7 +48,7 @@ export const HeaderLayout: VFC<Props> = memo((props) => {
     {
       displayName: "月報提出",
       icon: <DescriptionIcon />,
-      path: "/monthly-report",
+      path: "/post",
     },
   ];
   return (

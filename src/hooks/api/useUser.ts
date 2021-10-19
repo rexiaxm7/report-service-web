@@ -31,7 +31,7 @@ export const useUser = () => {
         .post(`/users`, user)
         .then((res) => {
           setUser(null);
-          createMessage(res, "ユーザーの登録に成功しました");
+          createMessage(res, "ユーザーを登録しました");
         })
         .catch((e) => createMessage(e, "ユーザーの登録に失敗しました"));
     },
@@ -43,7 +43,7 @@ export const useUser = () => {
       api
         .put(`/users/${user.id}`, user)
         .then((res) => {
-          createMessage(res, "ユーザーの更新に成功しました");
+          createMessage(res, "ユーザーを更新しました");
         })
         .catch((e) => {
           createMessage(e, "ユーザーの更新に失敗しました");
@@ -57,7 +57,7 @@ export const useUser = () => {
       api
         .delete(`/users/${userId}`)
         .then((res) => {
-          createMessage(res, "ユーザーの削除に成功しました");
+          createMessage(res, "ユーザーを削除しました");
         })
         .catch((e) => {
           createMessage(e, "ユーザーの削除に失敗しました");

@@ -1,22 +1,15 @@
-import React, { memo, useContext, useEffect, VFC } from "react";
+import React, { memo, useEffect, VFC } from "react";
 import { UserTableHeader } from "./UserTableHeader";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import dataGridJaJP from "./dataGridJaJP";
-import { useUsers } from "../../../hooks/api/useUsers";
 import { useUserTable } from "../../../hooks/view/useUserTable";
 import { UserDialog } from "./UserDialog";
 import { OperationDialog } from "../../molecules/OperationDialog";
-import { useOperationDialog } from "../../../hooks/view/useOperationDialog";
-import { useMessage } from "../../../hooks/view/useMessage";
-import { MessageContext } from "../../../providers/MessageProvider";
-import { SelectedUserContext } from "../../../providers/SelectedUserProvider";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 type Props = {};
 export const UserTable: VFC<Props> = memo((props) => {
-  const { users, getUsers } = useUsers();
   const {
     rowsPerPageOptions,
     setPageSize,
@@ -24,15 +17,14 @@ export const UserTable: VFC<Props> = memo((props) => {
     onClickDeleteButton,
     onClickEditButton,
     onClickActionButton,
+    users,
+    getUsers,
+    selectedUser,
+    setIsOperationModalOpen,
+    deleteUserMessage,
+    localizationJapanese,
+    message,
   } = useUserTable();
-  const useSelectedUserContext = () => useContext(SelectedUserContext);
-  const { selectedUser } = useSelectedUserContext();
-  const { setIsOperationModalOpen } = useOperationDialog();
-  const { deleteUserMessage } = useMessage();
-  const localizationJapanese = dataGridJaJP;
-
-  const useMessageContext = () => useContext(MessageContext);
-  const { message } = useMessageContext();
 
   useEffect(() => {
     //そのまま書くと何故か描画されない

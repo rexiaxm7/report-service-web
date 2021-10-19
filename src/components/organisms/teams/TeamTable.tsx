@@ -1,22 +1,15 @@
-import React, { memo, useContext, useEffect, VFC } from "react";
+import React, { memo, useEffect, VFC } from "react";
 import { TeamTableHeader } from "./TeamTableHeader";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import dataGridJaJP from "../users/dataGridJaJP";
-import { useTeams } from "../../../hooks/api/useTeams";
 import { useTeamTable } from "../../../hooks/view/useTeamTable";
 import { TeamDialog } from "./TeamDialog";
 import { OperationDialog } from "../../molecules/OperationDialog";
-import { useOperationDialog } from "../../../hooks/view/useOperationDialog";
-import { useMessage } from "../../../hooks/view/useMessage";
-import { MessageContext } from "../../../providers/MessageProvider";
-import { SelectedTeamContext } from "../../../providers/SelectedTeamProvider";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 type Props = {};
 export const TeamTable: VFC<Props> = memo((props) => {
-  const { teams, getTeams } = useTeams();
   const {
     rowsPerPageOptions,
     setPageSize,
@@ -24,15 +17,14 @@ export const TeamTable: VFC<Props> = memo((props) => {
     onClickDeleteButton,
     onClickEditButton,
     onClickActionButton,
+    selectedTeam,
+    message,
+    deleteTeamMessage,
+    setIsOperationModalOpen,
+    localizationJapanese,
+    teams,
+    getTeams,
   } = useTeamTable();
-  const useSelectedTeamContext = () => useContext(SelectedTeamContext);
-  const { selectedTeam } = useSelectedTeamContext();
-  const { setIsOperationModalOpen } = useOperationDialog();
-  const { deleteTeamMessage } = useMessage();
-  const localizationJapanese = dataGridJaJP;
-
-  const useMessageContext = () => useContext(MessageContext);
-  const { message } = useMessageContext();
 
   useEffect(() => {
     //そのまま書くと何故か描画されない

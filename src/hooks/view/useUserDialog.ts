@@ -6,7 +6,7 @@ import { SelectedUserContext } from "../../providers/SelectedUserProvider";
 
 export const useUserDialog = () => {
   const useSelectedUserContext = () => useContext(SelectedUserContext);
-  const { setSelectedUser } = useSelectedUserContext();
+  const { setSelectedUser, selectedUser } = useSelectedUserContext();
   const { updateUser, registerUser } = useUser();
 
   const useModalContext = () => useContext(UserModalContext);
@@ -64,5 +64,6 @@ export const useUserDialog = () => {
     onClickRegister,
     isUserModalOpen,
     setIsUserModalOpen,
+    selectedUser,
   };
 };

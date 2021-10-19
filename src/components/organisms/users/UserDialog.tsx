@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, VFC } from "react";
+import { memo, useEffect, VFC } from "react";
 import {
   Dialog,
   DialogActions,
@@ -10,15 +10,10 @@ import {
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
 import { useUserDialog } from "../../../hooks/view/useUserDialog";
-import { SelectedUserContext } from "../../../providers/SelectedUserProvider";
 
 type Props = {};
 
 export const UserDialog: VFC<Props> = memo((props) => {
-  const useSelectedUserContext = () => useContext(SelectedUserContext);
-  const { selectedUser } = useSelectedUserContext();
-  const { isUserModalOpen, setIsUserModalOpen } = useUserDialog();
-
   const {
     userName,
     setUserName,
@@ -29,6 +24,9 @@ export const UserDialog: VFC<Props> = memo((props) => {
     onClickCancel,
     onClickUpdate,
     onClickRegister,
+    selectedUser,
+    isUserModalOpen,
+    setIsUserModalOpen,
   } = useUserDialog();
 
   useEffect(() => {

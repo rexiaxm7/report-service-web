@@ -10,14 +10,12 @@ import {
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
 import { useTeamDialog } from "../../../hooks/view/useTeamDialog";
-import { SelectedTeamContext } from "../../../providers/SelectedTeamProvider";
 
 type Props = {};
 
 export const TeamDialog: VFC<Props> = memo((props) => {
-  const useSelectedTeamContext = () => useContext(SelectedTeamContext);
-  const { selectedTeam } = useSelectedTeamContext();
   const {
+    selectedTeam,
     teamName,
     setTeamName,
     setInputStartDate,
@@ -50,8 +48,6 @@ export const TeamDialog: VFC<Props> = memo((props) => {
 
     setSendingMessageUrl(selectedTeam?.sending_message_url ?? "");
   }, [selectedTeam]);
-
-  useEffect(() => {}, []);
 
   return (
     <>

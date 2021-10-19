@@ -4,14 +4,24 @@ import { useTeam } from "../api/useTeam";
 import { useTeamDialog } from "./useTeamDialog";
 import { useOperationDialog } from "./useOperationDialog";
 import { SelectedTeamContext } from "../../providers/SelectedTeamProvider";
+import { useMessage } from "./useMessage";
+import dataGridJaJP from "../../components/organisms/users/dataGridJaJP";
+import { MessageContext } from "../../providers/MessageProvider";
+import { useTeams } from "../api/useTeams";
 
 export type OnClickButtonProps = {
   selectedTeam: DisplayTeam;
 };
 
 export const useTeamTable = () => {
+  const { teams, getTeams } = useTeams();
+  const { deleteTeamMessage } = useMessage();
+  const localizationJapanese = dataGridJaJP;
+  const useMessageContext = () => useContext(MessageContext);
+  const { message } = useMessageContext();
+
   const useSelectedTeamContext = () => useContext(SelectedTeamContext);
-  const { setSelectedTeam } = useSelectedTeamContext();
+  const { selectedTeam, setSelectedTeam } = useSelectedTeamContext();
   const { deleteTeam } = useTeam();
   const { setIsTeamModalOpen } = useTeamDialog();
   const { setIsOperationModalOpen } = useOperationDialog();
@@ -59,5 +69,12 @@ export const useTeamTable = () => {
     onClickDeleteButton,
     onClickActionButton,
     onClickAddButton,
+    setIsOperationModalOpen,
+    selectedTeam,
+    deleteTeamMessage,
+    localizationJapanese,
+    message,
+    teams,
+    getTeams,
   };
 };

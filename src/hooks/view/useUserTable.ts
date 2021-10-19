@@ -4,14 +4,25 @@ import { useUser } from "../api/useUser";
 import { useUserDialog } from "./useUserDialog";
 import { useOperationDialog } from "./useOperationDialog";
 import { SelectedUserContext } from "../../providers/SelectedUserProvider";
+import { useUsers } from "../api/useUsers";
+import { useMessage } from "./useMessage";
+import dataGridJaJP from "../../components/organisms/users/dataGridJaJP";
+import { MessageContext } from "../../providers/MessageProvider";
 
 export type OnClickButtonProps = {
   selectedUser: DisplayUser;
 };
 
 export const useUserTable = () => {
+  const { users, getUsers } = useUsers();
+  const { deleteUserMessage } = useMessage();
+  const localizationJapanese = dataGridJaJP;
+
+  const useMessageContext = () => useContext(MessageContext);
+  const { message } = useMessageContext();
+
   const useSelectedUserContext = () => useContext(SelectedUserContext);
-  const { setSelectedUser } = useSelectedUserContext();
+  const { selectedUser, setSelectedUser } = useSelectedUserContext();
   const { deleteUser } = useUser();
   const { setIsUserModalOpen } = useUserDialog();
   const { setIsOperationModalOpen } = useOperationDialog();
@@ -59,5 +70,12 @@ export const useUserTable = () => {
     onClickDeleteButton,
     onClickActionButton,
     onClickAddButton,
+    users,
+    getUsers,
+    selectedUser,
+    setIsOperationModalOpen,
+    deleteUserMessage,
+    localizationJapanese,
+    message,
   };
 };

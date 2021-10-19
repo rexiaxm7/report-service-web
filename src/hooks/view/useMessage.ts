@@ -39,12 +39,13 @@ export const useMessage = () => {
     `${user?.id}:${user?.name}を削除しますか？`;
   const deleteTeamMessage = (team?: DisplayTeam | null) =>
     `${team?.id}:${team?.name}を削除しますか？`;
-
+  const registerReportMessage = () => `月報を提出します。よろしいですか？`;
   return {
     setIsMessageModalOpen,
     isMessageModalOpen,
     createMessage,
     deleteUserMessage,
     deleteTeamMessage,
+    registerReportMessage,
   };
 };
