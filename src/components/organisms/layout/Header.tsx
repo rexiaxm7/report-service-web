@@ -3,23 +3,14 @@ import { useHistory } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useHeader } from "../../../hooks/view/useHeader";
 
 type Props = {
   onClickMenu: any;
 };
 export const Header: VFC<Props> = memo((props) => {
   const { onClickMenu } = props;
-  const history = useHistory();
-  const onClickHome = useCallback(() => history.push("/home"), []);
-  const onClickUserManagement = useCallback(
-    () => history.push("/home/user_management"),
-    []
-  );
-
-  const onClickSetting = useCallback(
-    (props) => history.push("/home/setting"),
-    []
-  );
+  const { onClickApplicationTitle } = useHeader();
 
   return (
     <>
@@ -37,7 +28,12 @@ export const Header: VFC<Props> = memo((props) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              月報管理システム
+              <span
+                style={{ cursor: "pointer" }}
+                onClick={onClickApplicationTitle}
+              >
+                月報管理システム
+              </span>
             </Typography>
             <div>
               <IconButton>
