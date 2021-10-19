@@ -14,6 +14,7 @@ import { MessageProvider } from "../providers/MessageProvider";
 import { SelectedUserProvider } from "../providers/SelectedUserProvider";
 import { TeamModalProvider } from "../providers/TeamModalProvider";
 import { SelectedTeamProvider } from "../providers/SelectedTeamProvider";
+import { MonthlyReport } from "../components/pages/MonthlyReport";
 
 export const Router: VFC = memo(() => {
   return (
@@ -45,8 +46,8 @@ export const Router: VFC = memo(() => {
                           </Switch>
                         )}
                       />
-                      <Route path="/sandbox">
-                        <HeaderLayout>{<Sandbox />}</HeaderLayout>
+                      <Route path="/post/">
+                        <HeaderLayout>{<MonthlyReport />}</HeaderLayout>
                       </Route>
 
                       <Route
