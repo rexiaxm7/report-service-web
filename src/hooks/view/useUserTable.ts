@@ -8,6 +8,7 @@ import { useUsers } from "../api/useUsers";
 import { useMessage } from "./useMessage";
 import dataGridJaJP from "../../components/organisms/users/dataGridJaJP";
 import { MessageContext } from "../../providers/MessageProvider";
+import { GridSortModel } from "@mui/x-data-grid";
 
 export type OnClickButtonProps = {
   selectedUser: DisplayUser;
@@ -29,6 +30,13 @@ export const useUserTable = () => {
   //テーブルの行数
   const [pageSize, setPageSize] = useState(10);
   const rowsPerPageOptions = [10, 25, 50, 100];
+
+  const [sortModel, setSortModel] = useState<GridSortModel>([
+    {
+      field: "id",
+      sort: "asc",
+    },
+  ]);
 
   const onClickAddButton = useCallback(() => {
     console.log("onClickAddButton");
@@ -77,5 +85,7 @@ export const useUserTable = () => {
     deleteUserMessage,
     localizationJapanese,
     message,
+    sortModel,
+    setSortModel,
   };
 };

@@ -24,6 +24,7 @@ export const TeamTable: VFC<Props> = memo((props) => {
     localizationJapanese,
     teams,
     getTeams,
+    setSortModel,
   } = useTeamTable();
 
   useEffect(() => {
@@ -105,7 +106,6 @@ export const TeamTable: VFC<Props> = memo((props) => {
       <TeamTableHeader />
       <div style={{ width: "100%" }}>
         <DataGrid
-          sortModel={[{ field: "id", sort: "asc" }]}
           components={{
             Toolbar: GridToolbar,
           }}
@@ -118,6 +118,7 @@ export const TeamTable: VFC<Props> = memo((props) => {
           rowsPerPageOptions={rowsPerPageOptions}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           disableSelectionOnClick
+          onSortModelChange={(model) => setSortModel(model)}
         />
       </div>
       <TeamDialog />

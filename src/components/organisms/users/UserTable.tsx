@@ -24,6 +24,7 @@ export const UserTable: VFC<Props> = memo((props) => {
     deleteUserMessage,
     localizationJapanese,
     message,
+    setSortModel,
   } = useUserTable();
 
   useEffect(() => {
@@ -87,7 +88,6 @@ export const UserTable: VFC<Props> = memo((props) => {
       <UserTableHeader />
       <div style={{ width: "100%" }}>
         <DataGrid
-          sortModel={[{ field: "id", sort: "asc" }]}
           components={{
             Toolbar: GridToolbar,
           }}
@@ -100,6 +100,7 @@ export const UserTable: VFC<Props> = memo((props) => {
           rowsPerPageOptions={rowsPerPageOptions}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           disableSelectionOnClick
+          onSortModelChange={(model) => setSortModel(model)}
         ></DataGrid>
       </div>
       <UserDialog />

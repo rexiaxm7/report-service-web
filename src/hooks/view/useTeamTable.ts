@@ -8,6 +8,7 @@ import { useMessage } from "./useMessage";
 import dataGridJaJP from "../../components/organisms/users/dataGridJaJP";
 import { MessageContext } from "../../providers/MessageProvider";
 import { useTeams } from "../api/useTeams";
+import { GridSortModel } from "@mui/x-data-grid";
 
 export type OnClickButtonProps = {
   selectedTeam: DisplayTeam;
@@ -19,6 +20,13 @@ export const useTeamTable = () => {
   const localizationJapanese = dataGridJaJP;
   const useMessageContext = () => useContext(MessageContext);
   const { message } = useMessageContext();
+
+  const [sortModel, setSortModel] = useState<GridSortModel>([
+    {
+      field: "id",
+      sort: "asc",
+    },
+  ]);
 
   const useSelectedTeamContext = () => useContext(SelectedTeamContext);
   const { selectedTeam, setSelectedTeam } = useSelectedTeamContext();
@@ -76,5 +84,7 @@ export const useTeamTable = () => {
     message,
     teams,
     getTeams,
+    sortModel,
+    setSortModel,
   };
 };
