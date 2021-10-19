@@ -4,6 +4,7 @@ import {
   CardContent,
   Checkbox,
   FormControl,
+  FormControlLabel,
   FormGroup,
   Grid,
   Input,
@@ -18,7 +19,6 @@ import dayjs from "dayjs";
 type Props = {};
 export const MonthlyReportForm: VFC<Props> = memo((props) => {
   const {
-    toggleShowPreview,
     isShowPreview,
     text,
     onChangeText,
@@ -40,8 +40,10 @@ export const MonthlyReportForm: VFC<Props> = memo((props) => {
       <Grid item xs={12}>
         <Grid container justifyContent={"end"}>
           <Grid item>
-            プレビュー:
-            <Checkbox value={isShowPreview} onClick={toggleShowPreview} />
+            <FormControlLabel
+              control={<Checkbox value={isShowPreview} />}
+              label="プレビュー"
+            />
           </Grid>
         </Grid>
       </Grid>
