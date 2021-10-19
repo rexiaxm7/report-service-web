@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import dayjs from "dayjs";
 import { useReport } from "../api/useReport";
+import { useOperationDialog } from "./useOperationDialog";
+import { useMessage } from "./useMessage";
 
 export const useMonthlyReportForm = () => {
   const [text, setText] = useState("");
@@ -8,13 +10,22 @@ export const useMonthlyReportForm = () => {
   const { registerReport } = useReport();
   const [year, setYear] = useState(dayjs(date).year());
   const [month, setMonth] = useState(dayjs(date).month());
+  const { setIsOperationModalOpen } = useOperationDialog();
   const yearMonth = useMemo(
     () => `${dayjs(date).year()}年${dayjs(date).month() + 1}月`,
     [date]
   );
+  const { registerReportMessage } = useMessage();
 
   const onClickSendButton = () => {
-    console.log("aa");
+    setIsOperationModalOpen(true);
+  };
+
+  const onClickCancel = () => {
+    setIsOperationModalOpen(false);
+  };
+
+  const onClickRegister = () => {
     //TODO:　ログイン実装後にユーザーIDを対応するものに変える
     const report = {
       user_id: 1,
@@ -22,9 +33,10 @@ export const useMonthlyReportForm = () => {
       month: month,
       content: text,
     };
-    console.log(report);
     registerReport(report);
+    setIsOperationModalOpen(false);
   };
+
   const [isShowPreview, setIsShowPreview] = useState(false);
   const onChangeText = (e: any) => setText(e.target.value);
   const toggleShowPreview = () => setIsShowPreview(!isShowPreview);
@@ -43,5 +55,8 @@ export const useMonthlyReportForm = () => {
     onClickSendButton,
     year,
     month,
+    onClickRegister,
+    onClickCancel,
+    registerReportMessage,
   };
 };
