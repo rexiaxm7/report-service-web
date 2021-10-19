@@ -43,7 +43,7 @@ export const useTeam = () => {
         .post(`/teams`, team)
         .then((res) => {
           setTeam(null);
-          createMessage(res, "チームの登録に成功しました");
+          createMessage(res, "チームを登録しました");
         })
         .catch((e) => createMessage(e, "チームの登録に失敗しました"));
     },
@@ -55,7 +55,7 @@ export const useTeam = () => {
       api
         .put(`/teams/${team.id}`, team)
         .then((res) => {
-          createMessage(res, "チームの更新に成功しました");
+          createMessage(res, "チームを更新しました");
         })
         .catch((e) => {
           createMessage(e, "チームの更新に失敗しました");
