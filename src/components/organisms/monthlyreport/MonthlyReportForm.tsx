@@ -1,4 +1,4 @@
-import { memo, useState, VFC } from "react";
+import { memo, useEffect, VFC } from "react";
 import {
   Card,
   CardContent,
@@ -13,12 +13,27 @@ import {
 import { OperationButton } from "../../atoms/buttons/OperationButton";
 import ReactMarkdown from "react-markdown";
 import { useMonthlyReportForm } from "../../../hooks/view/useMonthlyReportForm";
-import { CardGiftcard } from "@mui/icons-material";
+import dayjs from "dayjs";
 
 type Props = {};
 export const MonthlyReportForm: VFC<Props> = memo((props) => {
-  const { toggleShowPreview, isShowPreview, text, onChangeText, yearMonth } =
-    useMonthlyReportForm();
+  const {
+    toggleShowPreview,
+    isShowPreview,
+    text,
+    onChangeText,
+    yearMonth,
+    onClickSendButton,
+    setMonth,
+    setYear,
+  } = useMonthlyReportForm();
+
+  useEffect(() => {
+    return () => {
+      setYear(dayjs().year());
+      setMonth(dayjs().month());
+    };
+  }, []);
 
   return (
     <Grid container spacing={2}>
@@ -33,7 +48,7 @@ export const MonthlyReportForm: VFC<Props> = memo((props) => {
       <Grid item xs={12}>
         <form>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
+            <Grid item xs={8}>
               <FormGroup>
                 <FormControl>
                   <InputLabel htmlFor={"dateInput"}>年月</InputLabel>
@@ -64,7 +79,7 @@ export const MonthlyReportForm: VFC<Props> = memo((props) => {
               <Grid item md={6} xs={12} textAlign={"start"} justifySelf={"end"}>
                 <Grid container justifyContent={"center"} height={"100%"}>
                   <Grid item xs={12}>
-                    <Card style={{ height: "100%" }}>
+                    <Card style={{ height: "100%" }} elevation={1}>
                       <CardContent>
                         <ReactMarkdown>{text}</ReactMarkdown>
                       </CardContent>
@@ -77,12 +92,9 @@ export const MonthlyReportForm: VFC<Props> = memo((props) => {
             <Grid item xs={12}>
               <Grid container justifyContent={"flex-end"} columnSpacing={1}>
                 <Grid item>
-                  <OperationButton color={"inherit"} onClick={() => {}}>
-                    キャンセル
+                  <OperationButton onClick={onClickSendButton}>
+                    送信
                   </OperationButton>
-                </Grid>
-                <Grid item>
-                  <OperationButton onClick={() => {}}>送信</OperationButton>
                 </Grid>
               </Grid>
             </Grid>
