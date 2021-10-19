@@ -12,6 +12,8 @@ import { MessageModalProvider } from "../providers/MessageModalProvider";
 import { OperationModalProvider } from "../providers/OperationModalProvider";
 import { MessageProvider } from "../providers/MessageProvider";
 import { SelectedUserProvider } from "../providers/SelectedUserProvider";
+import { TeamModalProvider } from "../providers/TeamModalProvider";
+import { SelectedTeamProvider } from "../providers/SelectedTeamProvider";
 
 export const Router: VFC = memo(() => {
   return (
@@ -19,51 +21,55 @@ export const Router: VFC = memo(() => {
       <MessageProvider>
         <SideMenuProvider>
           <SelectedUserProvider>
-            <MessageModalProvider>
-              <OperationModalProvider>
-                <UserModalProvider>
-                  <Route exact path="/">
-                    <Users />
-                  </Route>
-                  <Route
-                    path="/teams"
-                    render={({ match: { url } }) => (
-                      <Switch>
-                        {teamRoutes.map((route) => (
-                          <Route
-                            key={route.path}
-                            exact={route.exact}
-                            path={`${url}${route.path}`}
-                          >
-                            <HeaderLayout>{route.children}</HeaderLayout>
-                          </Route>
-                        ))}
-                      </Switch>
-                    )}
-                  />
-                  <Route path="/sandbox">
-                    <HeaderLayout>{<Sandbox />}</HeaderLayout>
-                  </Route>
+            <SelectedTeamProvider>
+              <MessageModalProvider>
+                <OperationModalProvider>
+                  <UserModalProvider>
+                    <TeamModalProvider>
+                      <Route exact path="/">
+                        <Users />
+                      </Route>
+                      <Route
+                        path="/teams"
+                        render={({ match: { url } }) => (
+                          <Switch>
+                            {teamRoutes.map((route) => (
+                              <Route
+                                key={route.path}
+                                exact={route.exact}
+                                path={`${url}${route.path}`}
+                              >
+                                <HeaderLayout>{route.children}</HeaderLayout>
+                              </Route>
+                            ))}
+                          </Switch>
+                        )}
+                      />
+                      <Route path="/sandbox">
+                        <HeaderLayout>{<Sandbox />}</HeaderLayout>
+                      </Route>
 
-                  <Route
-                    path="/users"
-                    render={({ match: { url } }) => (
-                      <Switch>
-                        {userRoutes.map((route) => (
-                          <Route
-                            key={route.path}
-                            exact={route.exact}
-                            path={`${url}${route.path}`}
-                          >
-                            <HeaderLayout>{route.children}</HeaderLayout>
-                          </Route>
-                        ))}
-                      </Switch>
-                    )}
-                  />
-                </UserModalProvider>
-              </OperationModalProvider>
-            </MessageModalProvider>
+                      <Route
+                        path="/users"
+                        render={({ match: { url } }) => (
+                          <Switch>
+                            {userRoutes.map((route) => (
+                              <Route
+                                key={route.path}
+                                exact={route.exact}
+                                path={`${url}${route.path}`}
+                              >
+                                <HeaderLayout>{route.children}</HeaderLayout>
+                              </Route>
+                            ))}
+                          </Switch>
+                        )}
+                      />
+                    </TeamModalProvider>
+                  </UserModalProvider>
+                </OperationModalProvider>
+              </MessageModalProvider>
+            </SelectedTeamProvider>
           </SelectedUserProvider>
         </SideMenuProvider>
       </MessageProvider>

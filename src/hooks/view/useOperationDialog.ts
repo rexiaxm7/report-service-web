@@ -15,12 +15,9 @@ export const useOperationDialog = () => {
     setSelectedUser(null);
   }, [setIsOperationModalOpen, setSelectedUser]);
 
-  const onClickOperation = useCallback(
-    (toggleDialog) => {
-      closeDialog();
-    },
-    [closeDialog]
-  );
+  const onClickOperation = useCallback(() => {
+    closeDialog();
+  }, [closeDialog]);
   const onClickCancel = useCallback(() => {
     closeDialog();
   }, [closeDialog]);

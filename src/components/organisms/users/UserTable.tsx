@@ -108,7 +108,7 @@ export const UserTable: VFC<Props> = memo((props) => {
           rowsPerPageOptions={rowsPerPageOptions}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           disableSelectionOnClick
-        />
+        ></DataGrid>
       </div>
       <UserDialog />
       <OperationDialog

@@ -1,24 +1,55 @@
-import { useState } from "react";
-import { useMessage } from "./useMessage";
-import { useUserDialog } from "./useUserDialog";
+import { useCallback, useContext, useState } from "react";
+import { DisplayTeam } from "../../types/Team";
+import { useTeam } from "../api/useTeam";
+import { useTeamDialog } from "./useTeamDialog";
+import { useOperationDialog } from "./useOperationDialog";
+import { SelectedTeamContext } from "../../providers/SelectedTeamProvider";
+
+export type OnClickButtonProps = {
+  selectedTeam: DisplayTeam;
+};
 
 export const useTeamTable = () => {
+  const useSelectedTeamContext = () => useContext(SelectedTeamContext);
+  const { setSelectedTeam } = useSelectedTeamContext();
+  const { deleteTeam } = useTeam();
+  const { setIsTeamModalOpen } = useTeamDialog();
+  const { setIsOperationModalOpen } = useOperationDialog();
   //テーブルの行数
   const [pageSize, setPageSize] = useState(10);
   const rowsPerPageOptions = [10, 25, 50, 100];
-  const { setIsMessageModalOpen } = useMessage();
-  const { setIsUserModalOpen } = useUserDialog();
 
-  //編集ボタンのクリック
-  const onClickEditButton = (id: number) => {
-    console.log("onClickEditButton");
-    setIsUserModalOpen(true);
-  };
-  //削除ボタンのクリック
-  const onClickDeleteButton = (id: number) => {
-    console.log("onClickDeleteButton");
-    setIsMessageModalOpen(true);
-  };
+  const onClickAddButton = useCallback(() => {
+    console.log("onClickAddButton");
+    setSelectedTeam(null);
+    setIsTeamModalOpen(true);
+  }, [setIsTeamModalOpen, setSelectedTeam]);
+
+  const onClickEditButton = useCallback(
+    (props: OnClickButtonProps) => {
+      const { selectedTeam } = props;
+      setSelectedTeam(selectedTeam);
+      setIsTeamModalOpen(true);
+    },
+    [setIsTeamModalOpen, setSelectedTeam]
+  );
+
+  const onClickDeleteButton = useCallback(
+    (props: OnClickButtonProps) => {
+      const { selectedTeam } = props;
+      setSelectedTeam(selectedTeam);
+      setIsOperationModalOpen(true);
+    },
+    [setIsOperationModalOpen, setSelectedTeam]
+  );
+
+  const onClickActionButton = useCallback(
+    (selectedTeam: DisplayTeam | null) => {
+      deleteTeam(selectedTeam!.id);
+      setIsOperationModalOpen(false);
+    },
+    [deleteTeam, setIsOperationModalOpen]
+  );
 
   return {
     pageSize,
@@ -26,5 +57,7 @@ export const useTeamTable = () => {
     rowsPerPageOptions,
     onClickEditButton,
     onClickDeleteButton,
+    onClickActionButton,
+    onClickAddButton,
   };
 };

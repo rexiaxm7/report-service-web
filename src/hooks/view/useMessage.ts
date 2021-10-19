@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { MessageModalContext } from "../../providers/MessageModalProvider";
 import { ResponseStatus } from "../../types/api/ResponseStatus";
 import { MessageContext } from "../../providers/MessageProvider";
+import { DisplayTeam } from "../../types/Team";
 
 export const useMessage = () => {
   const useMessageContext = () => useContext(MessageContext);
@@ -33,13 +34,17 @@ export const useMessage = () => {
     addMessage({ message: msg, status });
   };
 
+  //TODO:分けた方が良さそう？
   const deleteUserMessage = (user?: DisplayUser | null) =>
     `${user?.id}:${user?.name}を削除しますか？`;
+  const deleteTeamMessage = (team?: DisplayTeam | null) =>
+    `${team?.id}:${team?.name}を削除しますか？`;
 
   return {
     setIsMessageModalOpen,
     isMessageModalOpen,
     createMessage,
     deleteUserMessage,
+    deleteTeamMessage,
   };
 };
