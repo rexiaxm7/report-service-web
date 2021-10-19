@@ -6,14 +6,15 @@ export const useMonthlyReportForm = () => {
   const [text, setText] = useState("");
   const [date, setDate] = useState(dayjs().format());
   const { registerReport } = useReport();
-  const [year, setYear] = useState(1);
-  const [month, setMonth] = useState(1);
+  const [year, setYear] = useState(dayjs(date).year());
+  const [month, setMonth] = useState(dayjs(date).month());
   const yearMonth = useMemo(
     () => `${dayjs(date).year()}年${dayjs(date).month() + 1}月`,
     [date]
   );
 
   const onClickSendButton = () => {
+    console.log("aa");
     //TODO:　ログイン実装後にユーザーIDを対応するものに変える
     const report = {
       user_id: 1,
@@ -21,6 +22,7 @@ export const useMonthlyReportForm = () => {
       month: month,
       content: text,
     };
+    console.log(report);
     registerReport(report);
   };
   const [isShowPreview, setIsShowPreview] = useState(false);
@@ -39,5 +41,7 @@ export const useMonthlyReportForm = () => {
     setYear,
     yearMonth,
     onClickSendButton,
+    year,
+    month,
   };
 };

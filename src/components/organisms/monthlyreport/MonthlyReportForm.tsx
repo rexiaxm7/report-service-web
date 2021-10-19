@@ -8,7 +8,6 @@ import {
   FormGroup,
   Grid,
   Input,
-  InputLabel,
   TextField,
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
@@ -18,22 +17,8 @@ import dayjs from "dayjs";
 
 type Props = {};
 export const MonthlyReportForm: VFC<Props> = memo((props) => {
-  const {
-    isShowPreview,
-    text,
-    onChangeText,
-    yearMonth,
-    onClickSendButton,
-    setMonth,
-    setYear,
-  } = useMonthlyReportForm();
-
-  useEffect(() => {
-    return () => {
-      setYear(dayjs().year());
-      setMonth(dayjs().month());
-    };
-  }, []);
+  const { isShowPreview, text, onChangeText, yearMonth, onClickSendButton } =
+    useMonthlyReportForm();
 
   return (
     <Grid container spacing={2}>
@@ -53,7 +38,6 @@ export const MonthlyReportForm: VFC<Props> = memo((props) => {
             <Grid item xs={8}>
               <FormGroup>
                 <FormControl>
-                  <InputLabel htmlFor={"dateInput"}>年月</InputLabel>
                   <Input
                     id={"dateInput"}
                     readOnly
