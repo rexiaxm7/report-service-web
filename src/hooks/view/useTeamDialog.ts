@@ -8,7 +8,7 @@ export const useTeamDialog = () => {
   const DEFAULT_ALERT_START_DAYS = 25;
   const DEFAULT_INPUT_START_DATE = 20;
   const useSelectedTeamContext = () => useContext(SelectedTeamContext);
-  const { setSelectedTeam } = useSelectedTeamContext();
+  const { selectedTeam, setSelectedTeam } = useSelectedTeamContext();
   const { updateTeam, registerTeam } = useTeam();
 
   const useModalContext = () => useContext(TeamModalContext);
@@ -91,5 +91,6 @@ export const useTeamDialog = () => {
     setSendingMessageUrl,
     DEFAULT_INPUT_START_DATE,
     DEFAULT_ALERT_START_DAYS,
+    selectedTeam,
   };
 };
