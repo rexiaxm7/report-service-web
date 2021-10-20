@@ -1,8 +1,7 @@
-import React, { memo, ReactElement, VFC } from "react";
+import React, { memo, VFC } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { userRoutes } from "./directory/UserRoutes";
 import { HeaderLayout } from "../components/templates/HeaderLayout";
-import { Users } from "../components/pages/Users";
 import { teamRoutes } from "./directory/TeamRoutes";
 import { Page404 } from "../components/pages/Page404";
 import { SideMenuProvider } from "../providers/SideMenuProvider";
@@ -27,7 +26,7 @@ export const Router: VFC = memo(() => {
                   <UserModalProvider>
                     <TeamModalProvider>
                       <Route exact path="/">
-                        <Redirect to={"/users"}></Redirect>
+                        <Redirect to={"/users"} />
                       </Route>
                       <Route
                         path="/teams"
