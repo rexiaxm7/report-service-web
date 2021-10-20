@@ -1,6 +1,10 @@
 import React, { memo, useEffect, VFC } from "react";
 import { UserTableHeader } from "./UserTableHeader";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridToolbar,
+  GridValueFormatterParams,
+} from "@mui/x-data-grid";
 import { useUserTable } from "../../../hooks/view/useUserTable";
 import { UserDialog } from "./UserDialog";
 import { OperationDialog } from "../../molecules/OperationDialog";
@@ -35,23 +39,30 @@ export const UserTable: VFC<Props> = memo((props) => {
 
   //TODO:rendercellをどうにかしてhooksに持っていきたい
   const headers: any = [
-    { field: "id", headerName: "ID", disableClickEventBubbling: true },
+    {
+      field: "id",
+      flex: 0.1,
+      headerName: "ID",
+      disableClickEventBubbling: true,
+    },
     {
       field: "name",
       headerName: "ユーザー名",
-      flex: 0.7,
+      flex: 0.5,
       editable: false,
       disableClickEventBubbling: true,
     },
     {
-      field: "teamName",
-      headerName: "チーム名",
+      field: "team_id",
+      headerName: "チームID",
       sortable: false,
       editable: false,
-      flex: 0.1,
-      minWidth: 110,
+      flex: 0.3,
       disableClickEventBubbling: true,
       valueGetter: (params: any) => params.row?.team?.name,
+      valueFormatter: (params: GridValueFormatterParams) => {
+        return params.value + "チーム";
+      },
     },
     {
       field: "operation",
