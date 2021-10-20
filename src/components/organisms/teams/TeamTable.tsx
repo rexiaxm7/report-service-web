@@ -1,6 +1,10 @@
 import React, { memo, useEffect, VFC } from "react";
 import { TeamTableHeader } from "./TeamTableHeader";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridToolbar,
+  GridValueFormatterParams,
+} from "@mui/x-data-grid";
 import { useTeamTable } from "../../../hooks/view/useTeamTable";
 import { TeamDialog } from "./TeamDialog";
 import { OperationDialog } from "../../molecules/OperationDialog";
@@ -42,6 +46,9 @@ export const TeamTable: VFC<Props> = memo((props) => {
       flex: 0.1,
       editable: false,
       disableClickEventBubbling: true,
+      valueFormatter: (params: GridValueFormatterParams) => {
+        return params.value + "チーム";
+      },
     },
     {
       field: "input_start_date",
@@ -51,6 +58,9 @@ export const TeamTable: VFC<Props> = memo((props) => {
       flex: 0.15,
       minWidth: 110,
       disableClickEventBubbling: true,
+      valueFormatter: (params: GridValueFormatterParams) => {
+        return `毎月${params.value}日 `;
+      },
     },
     {
       field: "alert_start_days",
@@ -60,6 +70,9 @@ export const TeamTable: VFC<Props> = memo((props) => {
       flex: 0.15,
       minWidth: 110,
       disableClickEventBubbling: true,
+      valueFormatter: (params: GridValueFormatterParams) => {
+        return `毎月${params.value}日 `;
+      },
     },
     {
       field: "sending_message_url",
