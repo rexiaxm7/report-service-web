@@ -7,6 +7,8 @@ import {
   Grid,
   Input,
   InputLabel,
+  MenuItem,
+  Select,
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
 import { useUserDialog } from "../../../hooks/view/useUserDialog";
@@ -25,16 +27,19 @@ export const UserDialog: VFC<Props> = memo((props) => {
     onClickUpdate,
     onClickRegister,
     selectedUser,
+    setSelectedUser,
     isUserModalOpen,
     setIsUserModalOpen,
+    getTeams,
+    teams,
+    canRegister,
   } = useUserDialog();
 
   useEffect(() => {
     setUserName(selectedUser?.name ?? "");
-    setTeamId(selectedUser?.team_id ?? 0);
-  }, [selectedUser]);
-
-  useEffect(() => {}, []);
+    setTeamId(selectedUser?.team?.id ?? undefined);
+    getTeams();
+  }, [isUserModalOpen]);
 
   return (
     <>
@@ -72,14 +77,20 @@ export const UserDialog: VFC<Props> = memo((props) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputLabel htmlFor={"teamId"}>チームID</InputLabel>
-                  <Input
-                    type={"number"}
-                    id={"teamId"}
-                    value={teamId}
+                  <InputLabel htmlFor={"team"}>チーム</InputLabel>
+                  <Select
+                    id={"team"}
+                    value={`${teamId}`}
                     fullWidth
                     onChange={onChangeTeamId}
-                  />
+                  >
+                    <MenuItem value={undefined} disabled>
+                      選択してください
+                    </MenuItem>
+                    {teams.map((team) => (
+                      <MenuItem value={team.id}>{team.name}</MenuItem>
+                    ))}
+                  </Select>
                 </Grid>
               </Grid>
             </Grid>
@@ -94,6 +105,7 @@ export const UserDialog: VFC<Props> = memo((props) => {
               selectedUser ? onClickUpdate(selectedUser?.id) : onClickRegister()
             }
             color="primary"
+            disabled={!canRegister}
           >
             {selectedUser ? "更新" : "登録"}
           </OperationButton>

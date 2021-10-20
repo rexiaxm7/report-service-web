@@ -1,7 +1,7 @@
 import { useCallback, useContext, useState } from "react";
 import api from "../../axios";
 import { useMessage } from "../view/useMessage";
-import { DisplayUser, RegisterUser } from "../../types/User";
+import { DisplayUser, RegisterUser, UpdateUser } from "../../types/User";
 import { MessageContext } from "../../providers/MessageProvider";
 
 export const useUser = () => {
@@ -15,8 +15,8 @@ export const useUser = () => {
       api
         .get(`/users/${userId}`)
         .then((res) => {
-          const { id, name, team_id } = res.data;
-          const displayUser: DisplayUser = { id, name, team_id };
+          const { id, name, team } = res.data;
+          const displayUser: DisplayUser = { id, name, team };
           setUser(displayUser);
         })
         .catch((e) => createMessage(e));
@@ -39,7 +39,8 @@ export const useUser = () => {
   );
 
   const updateUser = useCallback(
-    (user: DisplayUser) => {
+    (user: UpdateUser) => {
+      console.log(user);
       api
         .put(`/users/${user.id}`, user)
         .then((res) => {
