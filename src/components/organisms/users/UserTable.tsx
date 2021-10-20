@@ -24,6 +24,7 @@ export const UserTable: VFC<Props> = memo((props) => {
     deleteUserMessage,
     localizationJapanese,
     message,
+    sortModel,
     setSortModel,
   } = useUserTable();
 
@@ -91,6 +92,7 @@ export const UserTable: VFC<Props> = memo((props) => {
           components={{
             Toolbar: GridToolbar,
           }}
+          sortModel={sortModel}
           rows={users}
           columns={headers}
           disableColumnMenu
@@ -101,7 +103,7 @@ export const UserTable: VFC<Props> = memo((props) => {
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           disableSelectionOnClick
           onSortModelChange={(model) => setSortModel(model)}
-        ></DataGrid>
+        />
       </div>
       <UserDialog />
       <OperationDialog

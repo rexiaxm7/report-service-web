@@ -24,6 +24,7 @@ export const TeamTable: VFC<Props> = memo((props) => {
     localizationJapanese,
     teams,
     getTeams,
+    sortModel,
     setSortModel,
   } = useTeamTable();
 
@@ -109,6 +110,7 @@ export const TeamTable: VFC<Props> = memo((props) => {
           components={{
             Toolbar: GridToolbar,
           }}
+          sortModel={sortModel}
           rows={teams}
           columns={headers}
           disableColumnMenu
