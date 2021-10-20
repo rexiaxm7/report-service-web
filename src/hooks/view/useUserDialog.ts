@@ -1,37 +1,46 @@
-import { ChangeEvent, useCallback, useContext, useState } from "react";
+import { ChangeEvent, useCallback, useContext, useMemo, useState } from "react";
 import { useUser } from "../api/useUser";
-import { DisplayUser, RegisterUser } from "../../types/User";
+import { RegisterUser, UpdateUser } from "../../types/User";
 import { UserModalContext } from "../../providers/UserModalProvider";
 import { SelectedUserContext } from "../../providers/SelectedUserProvider";
+import { useTeams } from "../api/useTeams";
+import { SelectChangeEvent } from "@mui/material";
 
 export const useUserDialog = () => {
   const useSelectedUserContext = () => useContext(SelectedUserContext);
   const { setSelectedUser, selectedUser } = useSelectedUserContext();
   const { updateUser, registerUser } = useUser();
 
+  const { getTeams, teams } = useTeams();
+
   const useModalContext = () => useContext(UserModalContext);
   const { isUserModalOpen, setIsUserModalOpen } = useModalContext();
 
   const [userName, setUserName] = useState<string>("");
-  const [teamId, setTeamId] = useState<number>(0);
+  const [teamId, setTeamId] = useState<number | undefined>(undefined);
+  const canRegister = useMemo(() => {
+    return teamId !== undefined;
+  }, [teamId]);
   const onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
   };
-  const onChangeTeamId = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeTeamId = (e: SelectChangeEvent) => {
     setTeamId(Number(e.target.value));
   };
 
   const closeDialog = useCallback(() => {
-    setIsUserModalOpen(false);
     setSelectedUser(null);
+    setIsUserModalOpen(false);
   }, [setIsUserModalOpen, setSelectedUser]);
 
   const onClickUpdate = useCallback(
     (id) => {
-      const target: DisplayUser = {
+      const target: UpdateUser = {
         id,
         name: userName,
-        team_id: teamId,
+        team: {
+          id: teamId!,
+        },
       };
       updateUser(target);
       closeDialog();
@@ -42,7 +51,9 @@ export const useUserDialog = () => {
   const onClickRegister = useCallback(() => {
     const target: RegisterUser = {
       name: userName,
-      team_id: teamId,
+      team: {
+        id: teamId!,
+      },
     };
     registerUser(target);
     closeDialog();
@@ -65,5 +76,9 @@ export const useUserDialog = () => {
     isUserModalOpen,
     setIsUserModalOpen,
     selectedUser,
+    getTeams,
+    teams,
+    canRegister,
+    setSelectedUser,
   };
 };

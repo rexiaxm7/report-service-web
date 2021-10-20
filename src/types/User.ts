@@ -1,4 +1,14 @@
-import { User } from "./api";
+import { Team, User } from "./api";
 
-export type DisplayUser = Pick<User, "id" | "name" | "team_id">;
-export type RegisterUser = Pick<DisplayUser, "name" | "team_id">;
+type UpdateTeam = {
+  team: Pick<Team, "id">;
+};
+
+type DisplayTeam = {
+  team: Pick<Team, "id" | "name">;
+};
+
+type RegisterTeam = UpdateTeam;
+export type DisplayUser = Pick<User, "id" | "name"> & DisplayTeam;
+export type UpdateUser = Pick<User, "id" | "name"> & UpdateTeam;
+export type RegisterUser = Pick<User, "name"> & RegisterTeam;

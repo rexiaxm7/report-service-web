@@ -11,7 +11,9 @@ export const useUsers = () => {
     console.log("getUsers");
     api
       .get<Array<DisplayUser>>(`/users`)
-      .then((res) => setUsers(res.data))
+      .then((res) => {
+        setUsers(res.data);
+      })
       .catch((e) => createMessage(e, "ユーザー一覧の取得に失敗しました"));
   }, []);
 
