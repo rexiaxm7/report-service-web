@@ -1,11 +1,10 @@
-import React, { memo, VFC } from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { memo, ReactElement, VFC } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { userRoutes } from "./directory/UserRoutes";
 import { HeaderLayout } from "../components/templates/HeaderLayout";
 import { Users } from "../components/pages/Users";
 import { teamRoutes } from "./directory/TeamRoutes";
 import { Page404 } from "../components/pages/Page404";
-import { Sandbox } from "../components/pages/Sandbox";
 import { SideMenuProvider } from "../providers/SideMenuProvider";
 import { UserModalProvider } from "../providers/UserModalProvider";
 import { MessageModalProvider } from "../providers/MessageModalProvider";
@@ -28,7 +27,7 @@ export const Router: VFC = memo(() => {
                   <UserModalProvider>
                     <TeamModalProvider>
                       <Route exact path="/">
-                        <Users />
+                        <Redirect to={"/users"}></Redirect>
                       </Route>
                       <Route
                         path="/teams"
@@ -40,7 +39,11 @@ export const Router: VFC = memo(() => {
                                 exact={route.exact}
                                 path={`${url}${route.path}`}
                               >
-                                <HeaderLayout>{route.children}</HeaderLayout>
+                                {route?.redirect ? (
+                                  <Redirect to={route.redirect} />
+                                ) : (
+                                  <HeaderLayout>{route.children}</HeaderLayout>
+                                )}
                               </Route>
                             ))}
                           </Switch>
@@ -60,7 +63,12 @@ export const Router: VFC = memo(() => {
                                 exact={route.exact}
                                 path={`${url}${route.path}`}
                               >
-                                <HeaderLayout>{route.children}</HeaderLayout>
+                                {route?.redirect ? (
+                                  <Redirect to={route.redirect} />
+                                ) : (
+                                  <HeaderLayout>{route.children}</HeaderLayout>
+                                )}
+                                )
                               </Route>
                             ))}
                           </Switch>
