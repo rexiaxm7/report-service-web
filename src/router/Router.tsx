@@ -67,7 +67,6 @@ export const Router: VFC = memo(() => {
                                 ) : (
                                   <HeaderLayout>{route.children}</HeaderLayout>
                                 )}
-                                )
                               </Route>
                             ))}
                           </Switch>
