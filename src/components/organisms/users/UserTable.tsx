@@ -8,7 +8,7 @@ import {
 import { useUserTable } from "../../../hooks/view/useUserTable";
 import { UserDialog } from "./UserDialog";
 import { OperationDialog } from "../../molecules/OperationDialog";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -76,18 +76,22 @@ export const UserTable: VFC<Props> = memo((props) => {
         return (
           <>
             <div>
-              <IconButton
-                color={"success"}
-                onClick={() => onClickEditButton({ selectedUser })}
-              >
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                color={"error"}
-                onClick={() => onClickDeleteButton({ selectedUser })}
-              >
-                <DeleteIcon />
-              </IconButton>
+              <Tooltip title="編集" placement="top">
+                <IconButton
+                  color={"success"}
+                  onClick={() => onClickEditButton({ selectedUser })}
+                >
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="削除" placement="top">
+                <IconButton
+                  color={"error"}
+                  onClick={() => onClickDeleteButton({ selectedUser })}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
             </div>
           </>
         );

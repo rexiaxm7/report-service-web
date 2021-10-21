@@ -8,7 +8,7 @@ import {
 import { useTeamTable } from "../../../hooks/view/useTeamTable";
 import { TeamDialog } from "./TeamDialog";
 import { OperationDialog } from "../../molecules/OperationDialog";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -95,18 +95,22 @@ export const TeamTable: VFC<Props> = memo((props) => {
         return (
           <>
             <div>
-              <IconButton
-                color={"success"}
-                onClick={() => onClickEditButton({ selectedTeam })}
-              >
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                color={"error"}
-                onClick={() => onClickDeleteButton({ selectedTeam })}
-              >
-                <DeleteIcon />
-              </IconButton>
+              <Tooltip title="編集" placement="top">
+                <IconButton
+                  color={"success"}
+                  onClick={() => onClickEditButton({ selectedTeam })}
+                >
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="削除" placement="top">
+                <IconButton
+                  color={"error"}
+                  onClick={() => onClickDeleteButton({ selectedTeam })}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
             </div>
           </>
         );
