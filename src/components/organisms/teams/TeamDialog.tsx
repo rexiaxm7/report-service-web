@@ -47,7 +47,7 @@ export const TeamDialog: VFC<Props> = memo((props) => {
     );
 
     setSendingMessageUrl(selectedTeam?.sending_message_url ?? "");
-  }, [selectedTeam]);
+  }, [isTeamModalOpen]);
 
   return (
     <>
