@@ -27,7 +27,7 @@ export const Router: VFC = memo(() => {
                   <UserModalProvider>
                     <TeamModalProvider>
                       <Route exact path="/">
-                        <Redirect to={"/users"} />
+                        <Redirect to={"/login"} />
                       </Route>
                       <Route
                         path="/teams"
