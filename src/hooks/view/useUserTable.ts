@@ -26,7 +26,8 @@ export const useUserTable = () => {
   const { selectedUser, setSelectedUser } = useSelectedUserContext();
   const { deleteUser } = useUser();
   const { setIsUserModalOpen } = useUserDialog();
-  const { setIsOperationModalOpen } = useOperationDialog();
+  const { isOperationModalOpen, setIsOperationModalOpen } =
+    useOperationDialog();
   //テーブルの行数
   const [pageSize, setPageSize] = useState(10);
   const rowsPerPageOptions = [10, 25, 50, 100];
@@ -87,5 +88,6 @@ export const useUserTable = () => {
     message,
     sortModel,
     setSortModel,
+    isOperationModalOpen,
   };
 };

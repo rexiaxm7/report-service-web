@@ -1,5 +1,4 @@
-import React, { memo, useCallback, VFC } from "react";
-import { useHistory } from "react-router-dom";
+import React, { memo, VFC } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -10,7 +9,7 @@ type Props = {
 };
 export const Header: VFC<Props> = memo((props) => {
   const { onClickMenu } = props;
-  const { onClickApplicationTitle } = useHeader();
+  const { onClickApplicationTitle, loginUser, loginUserName } = useHeader();
 
   return (
     <>
@@ -39,7 +38,7 @@ export const Header: VFC<Props> = memo((props) => {
               <IconButton>
                 <AccountCircleIcon style={{ color: "white" }} />
               </IconButton>
-              <span>ユーザー名</span>
+              <span>{loginUserName}</span>
             </div>
           </Toolbar>
         </AppBar>

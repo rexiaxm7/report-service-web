@@ -1,17 +1,15 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useHistory } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { LoginUser, LoginUserType } from "../../atom/LoginUser";
 
 export const useHeader = () => {
   const history = useHistory();
   const onClickApplicationTitle = useCallback(() => history.push("/"), []);
-  const onClickUserManagement = useCallback(
-    () => history.push("/home/user_management"),
-    []
+  const loginUser = useRecoilValue<LoginUserType>(LoginUser);
+  const loginUserName = useMemo(
+    () => (loginUser ? loginUser.name : ""),
+    [loginUser]
   );
-
-  const onClickSetting = useCallback(
-    (props) => history.push("/home/setting"),
-    []
-  );
-  return { onClickApplicationTitle };
+  return { onClickApplicationTitle, loginUser, loginUserName };
 };
