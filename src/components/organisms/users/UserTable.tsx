@@ -24,6 +24,7 @@ export const UserTable: VFC<Props> = memo((props) => {
     users,
     getUsers,
     selectedUser,
+    isOperationModalOpen,
     setIsOperationModalOpen,
     deleteUserMessage,
     localizationJapanese,
@@ -35,7 +36,7 @@ export const UserTable: VFC<Props> = memo((props) => {
   useEffect(() => {
     //そのまま書くと何故か描画されない
     setTimeout(() => getUsers(), 0);
-  }, [message]);
+  }, [isOperationModalOpen]);
 
   //TODO:rendercellをどうにかしてhooksに持っていきたい
   const headers: any = [

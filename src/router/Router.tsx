@@ -13,6 +13,7 @@ import { SelectedUserProvider } from "../providers/SelectedUserProvider";
 import { TeamModalProvider } from "../providers/TeamModalProvider";
 import { SelectedTeamProvider } from "../providers/SelectedTeamProvider";
 import { MonthlyReport } from "../components/pages/MonthlyReport";
+import { UserLogin } from "../../src/components/pages/UserLogin";
 
 export const Router: VFC = memo(() => {
   return (
@@ -26,7 +27,7 @@ export const Router: VFC = memo(() => {
                   <UserModalProvider>
                     <TeamModalProvider>
                       <Route exact path="/">
-                        <Redirect to={"/users"} />
+                        <Redirect to={"/login"} />
                       </Route>
                       <Route
                         path="/teams"
@@ -48,6 +49,7 @@ export const Router: VFC = memo(() => {
                           </Switch>
                         )}
                       />
+                      <Route path="/login/">{<UserLogin />}</Route>
                       <Route path="/post/">
                         <HeaderLayout>{<MonthlyReport />}</HeaderLayout>
                       </Route>
