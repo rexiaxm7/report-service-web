@@ -22,6 +22,7 @@ export const useAuth = () => {
         .post(`/login`, data)
         .then((res: any) => {
           const response = JSON.parse(res.data);
+          localStorage.setItem("token", res.headers["authorization"]);
           setLoginUser(response.user);
           //TODO: メソッドの外で実行したい
           history.push("/users");
