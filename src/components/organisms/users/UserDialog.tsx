@@ -49,7 +49,9 @@ export const UserDialog: VFC<Props> = memo((props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"編集"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {selectedUser ? "編集" : "追加"}
+        </DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>

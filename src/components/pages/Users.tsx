@@ -1,11 +1,13 @@
 import React, { memo, VFC } from "react";
 import { UserTable } from "../organisms/users/UserTable";
-import { Card } from "@mui/material";
+import { Card, CardContent } from "@mui/material";
 
 export const Users: VFC = memo(() => {
   return (
     <Card>
-      <UserTable />
+      <CardContent>
+        <UserTable />
+      </CardContent>
     </Card>
   );
 });
