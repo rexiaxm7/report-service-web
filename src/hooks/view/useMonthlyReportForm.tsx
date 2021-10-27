@@ -41,7 +41,7 @@ ${loginUser!.name}の${dayjs(date).month() + 1}月分の報告です。
   const onClickRegister = () => {
     //TODO:　ログイン実装後にユーザーIDを対応するものに変える
     const report = {
-      user_id: 1,
+      user_id: loginUser.id,
       year: year,
       month: month,
       content: text,

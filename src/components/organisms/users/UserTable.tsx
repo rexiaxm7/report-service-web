@@ -28,7 +28,7 @@ export const UserTable: VFC<Props> = memo((props) => {
     setIsOperationModalOpen,
     deleteUserMessage,
     localizationJapanese,
-    message,
+    loginUser,
     sortModel,
     setSortModel,
   } = useUserTable();
@@ -74,7 +74,9 @@ export const UserTable: VFC<Props> = memo((props) => {
       minWidth: 110,
       renderCell: (param: any) => {
         const selectedUser = param.row;
-        return (
+        return !loginUser.admin ? (
+          <></>
+        ) : (
           <>
             <div>
               <Tooltip title="編集" placement="top">

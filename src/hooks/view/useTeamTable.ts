@@ -9,12 +9,15 @@ import dataGridJaJP from "../../components/organisms/users/dataGridJaJP";
 import { MessageContext } from "../../providers/MessageProvider";
 import { useTeams } from "../api/useTeams";
 import { GridSortModel } from "@mui/x-data-grid";
+import { useRecoilValue } from "recoil";
+import { LoginUser } from "../../atom/LoginUser";
 
 export type OnClickButtonProps = {
   selectedTeam: DisplayTeam;
 };
 
 export const useTeamTable = () => {
+  const loginUser = useRecoilValue(LoginUser);
   const { teams, getTeams } = useTeams();
   const { deleteTeamMessage } = useMessage();
   const localizationJapanese = dataGridJaJP;
@@ -86,5 +89,6 @@ export const useTeamTable = () => {
     getTeams,
     sortModel,
     setSortModel,
+    loginUser,
   };
 };

@@ -9,12 +9,15 @@ import { useMessage } from "./useMessage";
 import dataGridJaJP from "../../components/organisms/users/dataGridJaJP";
 import { MessageContext } from "../../providers/MessageProvider";
 import { GridSortModel } from "@mui/x-data-grid";
+import { useRecoilValue } from "recoil";
+import { LoginUser } from "../../atom/LoginUser";
 
 export type OnClickButtonProps = {
   selectedUser: DisplayUser;
 };
 
 export const useUserTable = () => {
+  const loginUser = useRecoilValue(LoginUser);
   const { users, getUsers } = useUsers();
   const { deleteUserMessage } = useMessage();
   const localizationJapanese = dataGridJaJP;
@@ -80,6 +83,7 @@ export const useUserTable = () => {
     onClickActionButton,
     onClickAddButton,
     users,
+    loginUser,
     getUsers,
     selectedUser,
     setIsOperationModalOpen,

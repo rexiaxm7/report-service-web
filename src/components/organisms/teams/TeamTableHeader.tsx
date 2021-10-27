@@ -7,9 +7,11 @@ import { useTeamTable } from "../../../hooks/view/useTeamTable";
 
 type Props = {};
 export const TeamTableHeader: VFC<Props> = memo((props) => {
-  const { onClickAddButton } = useTeamTable();
+  const { onClickAddButton, loginUser } = useTeamTable();
 
-  return (
+  return !loginUser.admin ? (
+    <></>
+  ) : (
     <>
       <Grid container alignItems={"center"} justifyContent={"end"} mb={2}>
         <Grid item>
