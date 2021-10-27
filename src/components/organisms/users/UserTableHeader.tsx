@@ -7,9 +7,11 @@ import { useUserTable } from "../../../hooks/view/useUserTable";
 
 type Props = {};
 export const UserTableHeader: VFC<Props> = memo((props) => {
-  const { onClickAddButton } = useUserTable();
+  const { onClickAddButton, loginUser } = useUserTable();
 
-  return (
+  return !loginUser.admin ? (
+    <></>
+  ) : (
     <>
       <Grid container alignItems={"center"} justifyContent={"end"} mb={2}>
         <Grid item>
