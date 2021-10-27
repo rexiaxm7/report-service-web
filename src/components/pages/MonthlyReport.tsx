@@ -1,11 +1,13 @@
 import { memo, VFC } from "react";
 import { MonthlyReportForm } from "../organisms/monthlyreport/MonthlyReportForm";
-import { Card } from "@mui/material";
+import { Card, CardContent } from "@mui/material";
 
 export const MonthlyReport: VFC = memo((props) => {
   return (
     <Card>
-      <MonthlyReportForm />
+      <CardContent>
+        <MonthlyReportForm />
+      </CardContent>
     </Card>
   );
 });
