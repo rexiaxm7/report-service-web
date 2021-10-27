@@ -15,8 +15,8 @@ export const useUser = () => {
       api
         .get(`/users/${userId}`)
         .then((res) => {
-          const { id, name, team } = res.data;
-          const displayUser: DisplayUser = { id, name, team };
+          const { id, name, team, admin, email } = res.data;
+          const displayUser: DisplayUser = { id, name, team, admin, email };
           setUser(displayUser);
         })
         .catch((e) => createMessage(e));
@@ -28,7 +28,7 @@ export const useUser = () => {
     (user: RegisterUser) => {
       /*登録処理*/
       api
-        .post(`/users`, user)
+        .post(`/signup`, user)
         .then((res) => {
           setUser(null);
           createMessage(res, "ユーザーを登録しました");
@@ -40,7 +40,6 @@ export const useUser = () => {
 
   const updateUser = useCallback(
     (user: UpdateUser) => {
-      console.log(user);
       api
         .put(`/users/${user.id}`, user)
         .then((res) => {

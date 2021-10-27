@@ -7,6 +7,10 @@ import { useTeams } from "../api/useTeams";
 import { SelectChangeEvent } from "@mui/material";
 
 export const useUserDialog = () => {
+  const [email, setEmail] = useState("");
+  const [admin, setAdmin] = useState(false);
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const useSelectedUserContext = () => useContext(SelectedUserContext);
   const { setSelectedUser, selectedUser } = useSelectedUserContext();
   const { updateUser, registerUser } = useUser();
@@ -27,7 +31,19 @@ export const useUserDialog = () => {
   const onChangeTeamId = (e: SelectChangeEvent) => {
     setTeamId(Number(e.target.value));
   };
-
+  const onChangeAdmin = (e: ChangeEvent<HTMLInputElement>) => {
+    //FIXME:他にいい書き方がありそう
+    setAdmin(e.target.value === "true");
+  };
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+  const onClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   const closeDialog = useCallback(() => {
     setSelectedUser(null);
     setIsUserModalOpen(false);
@@ -38,9 +54,9 @@ export const useUserDialog = () => {
       const target: UpdateUser = {
         id,
         name: userName,
-        team: {
-          id: teamId!,
-        },
+        email: email,
+        admin: admin,
+        team_id: teamId!,
       };
       updateUser(target);
       closeDialog();
@@ -51,9 +67,10 @@ export const useUserDialog = () => {
   const onClickRegister = useCallback(() => {
     const target: RegisterUser = {
       name: userName,
-      team: {
-        id: teamId!,
-      },
+      email: email,
+      admin: admin,
+      team_id: teamId!,
+      password: password,
     };
     registerUser(target);
     closeDialog();
@@ -76,9 +93,21 @@ export const useUserDialog = () => {
     isUserModalOpen,
     setIsUserModalOpen,
     selectedUser,
-    getTeams,
     teams,
+    getTeams,
     canRegister,
     setSelectedUser,
+    admin,
+    setAdmin,
+    onChangeAdmin,
+    email,
+    setEmail,
+    onChangeEmail,
+    password,
+    setPassword,
+    onChangePassword,
+    onClickShowPassword,
+    showPassword,
+    setShowPassword,
   };
 };

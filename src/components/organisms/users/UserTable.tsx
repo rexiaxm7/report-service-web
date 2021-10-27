@@ -34,8 +34,9 @@ export const UserTable: VFC<Props> = memo((props) => {
   } = useUserTable();
 
   useEffect(() => {
-    //そのまま書くと何故か描画されない
-    setTimeout(() => getUsers(), 0);
+    if (!isOperationModalOpen) {
+      setTimeout(() => getUsers(), 0);
+    }
   }, [isOperationModalOpen]);
 
   //TODO:rendercellをどうにかしてhooksに持っていきたい
@@ -49,16 +50,22 @@ export const UserTable: VFC<Props> = memo((props) => {
     {
       field: "name",
       headerName: "ユーザー名",
-      flex: 0.5,
+      flex: 0.2,
+      editable: false,
+      disableClickEventBubbling: true,
+    },
+    {
+      field: "email",
+      headerName: "メールアドレス",
+      flex: 0.2,
       editable: false,
       disableClickEventBubbling: true,
     },
     {
       field: "team",
       headerName: "チーム",
-      sortable: false,
       editable: false,
-      flex: 0.3,
+      flex: 0.2,
       disableClickEventBubbling: true,
       valueGetter: (params: any) => params.row?.team?.name,
       valueFormatter: (params: GridValueFormatterParams) => {
@@ -66,8 +73,18 @@ export const UserTable: VFC<Props> = memo((props) => {
       },
     },
     {
+      field: "admin",
+      headerName: "権限",
+      editable: false,
+      flex: 0.2,
+      disableClickEventBubbling: true,
+      valueFormatter: (params: GridValueFormatterParams) => {
+        return params.value ? "チームリーダー" : "メンバー";
+      },
+    },
+    {
       field: "operation",
-      headerName: " ",
+      headerName: "操作",
       sortable: false,
       editable: false,
       flex: 0.1,

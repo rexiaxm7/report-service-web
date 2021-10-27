@@ -28,7 +28,7 @@ export const useUserTable = () => {
   const useSelectedUserContext = () => useContext(SelectedUserContext);
   const { selectedUser, setSelectedUser } = useSelectedUserContext();
   const { deleteUser } = useUser();
-  const { setIsUserModalOpen } = useUserDialog();
+  const { isUserModalOpen, setIsUserModalOpen } = useUserDialog();
   const { isOperationModalOpen, setIsOperationModalOpen } =
     useOperationDialog();
   //テーブルの行数
@@ -93,5 +93,6 @@ export const useUserTable = () => {
     sortModel,
     setSortModel,
     isOperationModalOpen,
+    isUserModalOpen,
   };
 };

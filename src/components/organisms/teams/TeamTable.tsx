@@ -30,6 +30,7 @@ export const TeamTable: VFC<Props> = memo((props) => {
     getTeams,
     sortModel,
     setSortModel,
+    loginUser,
   } = useTeamTable();
 
   useEffect(() => {
@@ -38,6 +39,7 @@ export const TeamTable: VFC<Props> = memo((props) => {
   }, [message]);
 
   //TODO:rendercellをどうにかしてhooksに持っていきたい
+  //TODO:メンバーログイン時は編集行を消す
   const headers: any = [
     { field: "id", headerName: "ID", disableClickEventBubbling: true },
     {
@@ -88,14 +90,16 @@ export const TeamTable: VFC<Props> = memo((props) => {
     },
     {
       field: "operation",
-      headerName: " ",
+      headerName: "操作",
       sortable: false,
       editable: false,
       flex: 0.1,
       minWidth: 110,
       renderCell: (param: any) => {
         const selectedTeam = param.row;
-        return (
+        return !loginUser.admin ? (
+          <></>
+        ) : (
           <>
             <div>
               <Tooltip title="編集" placement="top">
