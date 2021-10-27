@@ -82,7 +82,7 @@ export const TeamTable: VFC<Props> = memo((props) => {
       flex: 0.2,
       minWidth: 220,
       valueFormatter: (params: GridValueFormatterParams) => {
-        return params || `未設定`;
+        return params.value || `未設定`;
       },
       disableClickEventBubbling: true,
     },
