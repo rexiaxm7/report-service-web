@@ -14,6 +14,7 @@ import { TeamModalProvider } from "../providers/TeamModalProvider";
 import { SelectedTeamProvider } from "../providers/SelectedTeamProvider";
 import { MonthlyReport } from "../components/pages/MonthlyReport";
 import { UserLogin } from "../../src/components/pages/UserLogin";
+import { Routes } from "./Routes";
 
 export const Router: VFC = memo(() => {
   return (
@@ -27,53 +28,14 @@ export const Router: VFC = memo(() => {
                   <UserModalProvider>
                     <TeamModalProvider>
                       <Route exact path="/">
-                        <Redirect to={"/login"} />
+                        <Redirect to={"/users"} />
                       </Route>
-                      <Route
-                        path="/teams"
-                        render={({ match: { url } }) => (
-                          <Switch>
-                            {teamRoutes.map((route) => (
-                              <Route
-                                key={route.path}
-                                exact={route.exact}
-                                path={`${url}${route.path}`}
-                              >
-                                {route?.redirect ? (
-                                  <Redirect to={route.redirect} />
-                                ) : (
-                                  <HeaderLayout>{route.children}</HeaderLayout>
-                                )}
-                              </Route>
-                            ))}
-                          </Switch>
-                        )}
-                      />
-                      <Route path="/login/">{<UserLogin />}</Route>
-                      <Route path="/post/">
+                      <Routes path="/teams" routes={teamRoutes} />
+                      <Route path="/login">{<UserLogin />}</Route>
+                      <Route path="/post">
                         <HeaderLayout>{<MonthlyReport />}</HeaderLayout>
                       </Route>
-
-                      <Route
-                        path="/users"
-                        render={({ match: { url } }) => (
-                          <Switch>
-                            {userRoutes.map((route) => (
-                              <Route
-                                key={route.path}
-                                exact={route.exact}
-                                path={`${url}${route.path}`}
-                              >
-                                {route?.redirect ? (
-                                  <Redirect to={route.redirect} />
-                                ) : (
-                                  <HeaderLayout>{route.children}</HeaderLayout>
-                                )}
-                              </Route>
-                            ))}
-                          </Switch>
-                        )}
-                      />
+                      <Routes path="/users" routes={userRoutes} />
                     </TeamModalProvider>
                   </UserModalProvider>
                 </OperationModalProvider>
