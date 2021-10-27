@@ -9,6 +9,7 @@ import {
   Grid,
   Input,
   TextField,
+  Typography,
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
 import ReactMarkdown from "react-markdown";
@@ -50,17 +51,10 @@ export const MonthlyReportForm: VFC<Props> = memo((props) => {
         <Grid item xs={12}>
           <form>
             <Grid container spacing={3}>
-              <Grid item xs={8}>
-                <FormGroup>
-                  <FormControl>
-                    <Input
-                      id={"dateInput"}
-                      readOnly
-                      value={yearMonth}
-                      disableUnderline={true}
-                    />
-                  </FormControl>
-                </FormGroup>
+              <Grid item xs={12}>
+                <Typography variant={"h5"} textAlign={"center"}>
+                  {yearMonth}
+                </Typography>
               </Grid>
               <Grid item xs={isShowPreview ? 6 : 12}>
                 <FormGroup>
