@@ -1,8 +1,9 @@
 import { ReactElement } from "react";
 
-export type Route = {
+export type RouteTypes = {
   path: string;
   exact: boolean;
   children: ReactElement;
-  redirect?: string;
+  redirect?: string | null;
+  isPrivate?: boolean | null;
 };
