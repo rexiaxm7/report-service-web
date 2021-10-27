@@ -1,5 +1,6 @@
 import { memo, useContext, useEffect, VFC } from "react";
 import {
+  Box,
   Dialog,
   DialogActions,
   DialogContent,
@@ -78,13 +79,22 @@ export const TeamDialog: VFC<Props> = memo((props) => {
                 )}
 
                 <Grid item xs={12}>
-                  <InputLabel htmlFor={"teamName"}>チーム名</InputLabel>
-                  <Input
-                    id={"teamName"}
-                    value={teamName}
-                    fullWidth
-                    onChange={onChangeTeamName}
-                  />
+                  <Grid container alignItems={"end"}>
+                    <Grid item xs={9}>
+                      <InputLabel htmlFor={"teamName"}>チーム名</InputLabel>
+                      <Input
+                        id={"teamName"}
+                        value={teamName}
+                        fullWidth
+                        onChange={onChangeTeamName}
+                      />
+                    </Grid>
+                    <Grid item xs={3} pl={2}>
+                      <Box>
+                        <span>チーム</span>
+                      </Box>
+                    </Grid>
+                  </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <InputLabel htmlFor={"inputStartDate"}>
