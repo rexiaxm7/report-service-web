@@ -137,7 +137,7 @@ export const useUserDialog = () => {
       defaultValue: "",
       value: selectedUser?.email,
     },
-    { name: "password", defaultValue: false },
+    { name: "password", defaultValue: "" },
   ];
   const initializeForm = () => {
     for (const target of formData) {

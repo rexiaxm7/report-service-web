@@ -53,7 +53,7 @@ export const UserDialog: VFC<Props> = memo((props) => {
           {selectedUser ? "編集" : "追加"}
         </DialogTitle>
         <DialogContent>
-          <Stack spacing={3} width={"100%"}>
+          <Stack spacing={3} mt={2} width={"100%"}>
             <FormControl>
               <Controller
                 name="teamId"
