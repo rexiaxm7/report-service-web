@@ -1,19 +1,27 @@
 import * as yup from "yup";
 import { useValidationMessage } from "./useValidationMessage";
+import { useDomain } from "./useDomain";
 
 export const useValidationDomain = () => {
   const {
     REQUIRED,
     REQUIRED_SELECT,
     MIN_NUMBER_INPUT,
+    MAX_NUMBER_INPUT,
     MATCHES_PASSWORD,
     FORMAT,
   } = useValidationMessage();
-  const TEAM = "チーム";
-  const AUTHORITY = "権限";
-  const USER_NAME = "ユーザー名";
-  const EMAIL = "メールアドレス";
-  const PASSWORD = "パスワード";
+
+  const {
+    INPUT_START_DATE,
+    ALERT_START_DAYS,
+    TEAM,
+    TEAM_NAME,
+    USER_NAME,
+    EMAIL,
+    PASSWORD,
+    AUTHORITY,
+  } = useDomain();
 
   const teamIdDomain = yup.number().min(1, REQUIRED_SELECT(TEAM));
   const adminDomain = yup.boolean().required(REQUIRED_SELECT(AUTHORITY));
@@ -31,11 +39,28 @@ export const useValidationDomain = () => {
       MATCHES_PASSWORD()
     );
 
+  const teamNameDomain = yup.string().required(REQUIRED(TEAM_NAME));
+  const inputStartDateDomain = yup
+    .number()
+    .min(1, MIN_NUMBER_INPUT(0, INPUT_START_DATE))
+    .max(31, MAX_NUMBER_INPUT(31, INPUT_START_DATE))
+    .required(REQUIRED_SELECT(INPUT_START_DATE));
+  const alertStartDaysDomain = yup
+    .number()
+    .min(1, MIN_NUMBER_INPUT(0, ALERT_START_DAYS))
+    .max(31, MAX_NUMBER_INPUT(31, ALERT_START_DAYS))
+    .required(REQUIRED_SELECT(ALERT_START_DAYS));
+  const sendingMessageUrlDomain = yup.string();
+
   return {
     passwordDomain,
     emailDomain,
     teamIdDomain,
     adminDomain,
     userNameDomain,
+    teamNameDomain,
+    inputStartDateDomain,
+    alertStartDaysDomain,
+    sendingMessageUrlDomain,
   };
 };

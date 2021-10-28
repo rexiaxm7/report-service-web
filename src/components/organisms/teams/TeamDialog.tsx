@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, VFC } from "react";
+import { memo, useEffect, VFC } from "react";
 import {
   Box,
   Dialog,
@@ -8,6 +8,7 @@ import {
   Grid,
   Input,
   InputLabel,
+  TextField,
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
 import { useTeamDialog } from "../../../hooks/view/useTeamDialog";
@@ -17,38 +18,14 @@ type Props = {};
 export const TeamDialog: VFC<Props> = memo((props) => {
   const {
     selectedTeam,
-    teamName,
-    setTeamName,
-    setInputStartDate,
-    setAlertStartDays,
-    alertStartDays,
-    inputStartDate,
     isTeamModalOpen,
     setIsTeamModalOpen,
-    onChangeTeamName,
-    onChangeAlertStartDays,
-    onChangeInputStartDate,
-    onChangeSendingMessageUrl,
-    setSendingMessageUrl,
-    sendingMessageUrl,
     onClickCancel,
-    onClickUpdate,
-    onClickRegister,
-    DEFAULT_ALERT_START_DAYS,
-    DEFAULT_INPUT_START_DATE,
+    register,
+    handleSubmit,
+    errors,
+    onSubmit,
   } = useTeamDialog();
-
-  useEffect(() => {
-    setTeamName(selectedTeam?.name ?? "");
-    setInputStartDate(
-      selectedTeam?.input_start_date ?? DEFAULT_INPUT_START_DATE
-    );
-    setAlertStartDays(
-      selectedTeam?.alert_start_days ?? DEFAULT_ALERT_START_DAYS
-    );
-
-    setSendingMessageUrl(selectedTeam?.sending_message_url ?? "");
-  }, [isTeamModalOpen]);
 
   return (
     <>
@@ -81,12 +58,12 @@ export const TeamDialog: VFC<Props> = memo((props) => {
                 <Grid item xs={12}>
                   <Grid container alignItems={"end"}>
                     <Grid item xs={9}>
-                      <InputLabel htmlFor={"teamName"}>チーム名</InputLabel>
-                      <Input
-                        id={"teamName"}
-                        value={teamName}
+                      <TextField
+                        label={"チーム名"}
+                        error={Boolean(errors.teamName)}
+                        helperText={errors.teamName?.message}
+                        {...register("teamName")}
                         fullWidth
-                        onChange={onChangeTeamName}
                       />
                     </Grid>
                     <Grid item xs={3} pl={2}>
@@ -97,39 +74,33 @@ export const TeamDialog: VFC<Props> = memo((props) => {
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                  <InputLabel htmlFor={"inputStartDate"}>
-                    月報入力開始日
-                  </InputLabel>
-                  <Input
+                  <TextField
                     type={"number"}
-                    id={"inputStartDate"}
-                    value={inputStartDate}
+                    label={"月報入力開始日"}
+                    error={Boolean(errors.inputStartDate)}
+                    helperText={errors.inputStartDate?.message}
+                    {...register("inputStartDate")}
                     fullWidth
-                    onChange={onChangeInputStartDate}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputLabel htmlFor={"alertStartDays"}>
-                    月報入力警告日
-                  </InputLabel>
-                  <Input
+                  <TextField
+                    label={"月報入力警告日"}
                     type={"number"}
-                    id={"alertStartDays"}
-                    value={alertStartDays}
+                    error={Boolean(errors.alertStartDays)}
+                    helperText={errors.alertStartDays?.message}
+                    {...register("alertStartDays")}
                     fullWidth
-                    onChange={onChangeAlertStartDays}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputLabel htmlFor={"sendingMessageUrl"}>
-                    送信先URL
-                  </InputLabel>
-                  <Input
+                  <TextField
+                    label={"送信先URL"}
                     type={"url"}
-                    id={"sendingMessageUrl"}
-                    value={sendingMessageUrl}
+                    error={Boolean(errors.sendingMessageUrl)}
+                    helperText={errors.sendingMessageUrl?.message}
+                    {...register("sendingMessageUrl")}
                     fullWidth
-                    onChange={onChangeSendingMessageUrl}
                   />
                 </Grid>
               </Grid>
@@ -140,12 +111,7 @@ export const TeamDialog: VFC<Props> = memo((props) => {
           <OperationButton onClick={() => onClickCancel()} color="inherit">
             キャンセル
           </OperationButton>
-          <OperationButton
-            onClick={() =>
-              selectedTeam ? onClickUpdate(selectedTeam?.id) : onClickRegister()
-            }
-            color="primary"
-          >
+          <OperationButton onClick={handleSubmit(onSubmit)} color="primary">
             {selectedTeam ? "更新" : "登録"}
           </OperationButton>
         </DialogActions>
