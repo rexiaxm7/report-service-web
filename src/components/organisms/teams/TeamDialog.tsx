@@ -60,6 +60,7 @@ export const TeamDialog: VFC<Props> = memo((props) => {
                     <Grid item xs={9}>
                       <TextField
                         label={"チーム名"}
+                        required
                         error={Boolean(errors.teamName)}
                         helperText={errors.teamName?.message}
                         {...register("teamName")}
@@ -77,6 +78,7 @@ export const TeamDialog: VFC<Props> = memo((props) => {
                   <TextField
                     type={"number"}
                     label={"月報入力開始日"}
+                    required
                     error={Boolean(errors.inputStartDate)}
                     helperText={errors.inputStartDate?.message}
                     {...register("inputStartDate")}
@@ -86,6 +88,7 @@ export const TeamDialog: VFC<Props> = memo((props) => {
                 <Grid item xs={12}>
                   <TextField
                     label={"月報入力警告日"}
+                    required
                     type={"number"}
                     error={Boolean(errors.alertStartDays)}
                     helperText={errors.alertStartDays?.message}

@@ -61,6 +61,7 @@ export const UserDialog: VFC<Props> = memo((props) => {
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    required
                     select
                     label="チーム"
                     fullWidth
@@ -125,6 +126,7 @@ export const UserDialog: VFC<Props> = memo((props) => {
             <TextField
               type={"email"}
               label={"メールアドレス"}
+              required
               error={Boolean(errors.email)}
               helperText={errors.email?.message}
               {...register("email")}
@@ -133,6 +135,7 @@ export const UserDialog: VFC<Props> = memo((props) => {
             {!selectedUser ? (
               <TextField
                 label={"パスワード"}
+                required
                 fullWidth
                 error={Boolean(errors.password)}
                 helperText={errors.password?.message}
