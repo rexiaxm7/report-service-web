@@ -101,6 +101,7 @@ export const useUserDialog = () => {
     setValue,
     formState: { errors },
     control,
+    clearErrors,
   } = useForm<UserFormInput>({
     // 追加
     resolver: yupResolver(isUpdate ? updateSchema : registerSchema),
@@ -110,24 +111,60 @@ export const useUserDialog = () => {
     isUpdate ? onClickUpdate(selectedUser?.id, data) : onClickRegister(data);
   };
 
-  const setDefaultValueToForm = () => {
-    setValue("userName", "");
-    setValue("teamId", -1);
-    setValue("admin", false);
-    setValue("email", "");
-    setValue("password", "");
+  type FormData = {
+    name: any;
+    defaultValue: any;
+    value?: any;
+  };
+  const formData: Array<FormData> = [
+    {
+      name: "userName",
+      defaultValue: "",
+      value: selectedUser?.name,
+    },
+    {
+      name: "teamId",
+      defaultValue: -1,
+      value: selectedUser?.team?.id,
+    },
+    {
+      name: "admin",
+      defaultValue: false,
+      value: selectedUser?.admin,
+    },
+    {
+      name: "email",
+      defaultValue: "",
+      value: selectedUser?.email,
+    },
+    { name: "password", defaultValue: false },
+  ];
+  const initializeForm = () => {
+    for (const target of formData) {
+      const { name, defaultValue } = target;
+      setValue(name, defaultValue);
+    }
     setShowPassword(false);
   };
-  const setSelectedUserValueToForm = () => {
-    setValue("userName", selectedUser!.name);
-    setValue("teamId", selectedUser!.team?.id);
-    setValue("admin", selectedUser!.admin);
-    setValue("email", selectedUser!.email);
+  const initializeUpdateForm = () => {
+    const targets: Array<any> = formData.filter(
+      (target: any) => "value" in target
+    );
+    for (const target of targets) {
+      const { name, value } = target;
+      setValue(name, value);
+    }
   };
-
+  const clearFormError = () => {
+    const targets: any = formData.map((target: any) => target.id);
+    for (const target of targets) {
+      clearErrors(target);
+    }
+  };
   useEffect(() => {
     if (!isUserModalOpen) return;
-    isUpdate ? setSelectedUserValueToForm() : setDefaultValueToForm();
+    clearFormError();
+    isUpdate ? initializeUpdateForm() : initializeForm();
   }, [isUserModalOpen]);
 
   //TODO: ダイアログを開くたびにチームを更新した方が良い？
