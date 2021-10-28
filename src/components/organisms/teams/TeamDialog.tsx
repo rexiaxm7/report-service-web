@@ -56,7 +56,7 @@ export const TeamDialog: VFC<Props> = memo((props) => {
                 )}
 
                 <Grid item xs={12}>
-                  <Grid container alignItems={"end"}>
+                  <Grid container alignItems={"center"}>
                     <Grid item xs={9}>
                       <TextField
                         label={"チーム名"}
