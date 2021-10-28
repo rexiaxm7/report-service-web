@@ -1,8 +1,6 @@
-import { memo, useEffect, VFC } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import * as yup from "yup";
+import { memo, VFC } from "react";
+import { Controller } from "react-hook-form";
 import {
-  Box,
   Dialog,
   DialogActions,
   DialogContent,
@@ -11,109 +9,36 @@ import {
   FormControlLabel,
   FormHelperText,
   FormLabel,
-  Grid,
   IconButton,
   Input,
-  InputAdornment,
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Radio,
   RadioGroup,
-  Select,
   Stack,
   TextField,
 } from "@mui/material";
 import { OperationButton } from "../../atoms/buttons/OperationButton";
 import { useUserDialog } from "../../../hooks/view/useUserDialog";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 type Props = {};
 
 export const UserDialog: VFC<Props> = memo((props) => {
   const {
-    email,
-    setEmail,
-    onChangeEmail,
-    userName,
-    setUserName,
-    onChangeUserName,
-    password,
-    setPassword,
-    onChangePassword,
-    setTeamId,
-    teamId,
-    onChangeTeamId,
-    admin,
-    setAdmin,
-    onChangeAdmin,
     onClickCancel,
-    onClickUpdate,
-    onClickRegister,
-    selectedUser,
     isUserModalOpen,
     setIsUserModalOpen,
-    getTeams,
+    selectedUser,
     teams,
-    canRegister,
     onClickShowPassword,
     showPassword,
-    setShowPassword,
-  } = useUserDialog();
-
-  const schema = yup.object({
-    teamId: yup.number().required("チームを選択してください"),
-    admin: yup.boolean().required("権限を選択してください"),
-    email: yup
-      .string()
-      .required("メールアドレスは必須です")
-      .email("正しいメールアドレスを入力してください"),
-    userName: yup.string().required("ユーザー名を入力してください"),
-    password: yup
-      .string()
-      .required("パスワードは必須です")
-      .min(6, "少ないよ")
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&].*$/,
-        "パスワード弱いよ"
-      ),
-  });
-
-  const {
     register,
     handleSubmit,
-    formState: { errors },
+    errors,
     control,
-  } = useForm<SampleFormInput>({
-    // 追加
-    resolver: yupResolver(schema),
-  });
-
-  // フォームの型
-  interface SampleFormInput {
-    userName: string;
-    teamId: number;
-    admin: boolean;
-    email: string;
-    password: string;
-  }
-
-  const onSubmit: SubmitHandler<SampleFormInput> = (data: any) => {
-    selectedUser ? onClickUpdate(selectedUser?.id) : onClickRegister();
-  };
-
-  useEffect(() => {
-    if (isUserModalOpen) {
-      getTeams();
-      setUserName(selectedUser?.name ?? "");
-      setTeamId(selectedUser?.team?.id ?? undefined);
-      setAdmin(selectedUser?.admin ?? false);
-      setEmail(selectedUser?.email ?? "");
-      setPassword(selectedUser ? "dummy" : "");
-      setShowPassword(false);
-    }
-  }, [isUserModalOpen]);
+    onSubmit,
+  } = useUserDialog();
 
   return (
     <>
@@ -142,6 +67,9 @@ export const UserDialog: VFC<Props> = memo((props) => {
                     error={Boolean(errors.teamId)}
                     helperText={errors.teamId?.message}
                   >
+                    <MenuItem value={-1} disabled>
+                      選択してください
+                    </MenuItem>
                     {teams.map((team) => (
                       <MenuItem value={team.id}>{team.name}</MenuItem>
                     ))}
@@ -195,32 +123,30 @@ export const UserDialog: VFC<Props> = memo((props) => {
             />
 
             <TextField
+              type={"email"}
               label={"メールアドレス"}
               error={Boolean(errors.email)}
               helperText={errors.email?.message}
               {...register("email")}
               fullWidth
-              onChange={onChangeEmail}
             />
-
             {!selectedUser ? (
-              <Box>
-                <InputLabel htmlFor="password">パスワード</InputLabel>
-                <Input
-                  fullWidth
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={onChangePassword}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton onClick={onClickShowPassword}>
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </Box>
+              <TextField
+                label={"パスワード"}
+                fullWidth
+                error={Boolean(errors.password)}
+                helperText={errors.password?.message}
+                {...register("password")}
+                id="password"
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton onClick={onClickShowPassword}>
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  ),
+                }}
+              />
             ) : (
               <></>
             )}
