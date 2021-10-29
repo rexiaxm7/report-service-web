@@ -21,6 +21,7 @@ import {
 import { OperationButton } from "../../atoms/buttons/OperationButton";
 import { useUserDialog } from "../../../hooks/view/useUserDialog";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { MoleculeTextField } from "../../molecules/MoleculeTextField";
 
 type Props = {};
 
@@ -114,6 +115,15 @@ export const UserDialog: VFC<Props> = memo((props) => {
                 <FormHelperText>{errors.admin?.message}</FormHelperText>
               )}
             </FormControl>
+
+            <MoleculeTextField
+              label={"ユーザー名"}
+              required={true}
+              helperText={errors.userName?.message}
+              error={Boolean(errors.userName)}
+              register={register("userName")}
+            />
+
             <TextField
               label={"ユーザー名"}
               required
