@@ -1,5 +1,6 @@
 import { useTeamRoutes } from "../../router/directory/TeamRoutes";
 import { useUserRoutes } from "../../router/directory/UserRoutes";
+import { usePostRoutes } from "../../router/directory/PostRoutes";
 
 export const usePageTitle = () => {
   const addPrefixRoutes = (routes: any, prefix: string) =>
@@ -10,12 +11,18 @@ export const usePageTitle = () => {
         path: `${url.replace(/\/$/, "")}`,
       };
     });
-  //TODO: ページ追加時にいじる箇所を最小限にしたい
+  //TODO: 肥大化するのでどうにかして抑制する
   const { teamRoutes, teamRoot } = useTeamRoutes();
   const { userRoutes, userRoot } = useUserRoutes();
+  const { postRoutes, postRoot } = usePostRoutes();
   const prefixedTeamRoutes = addPrefixRoutes(teamRoutes, teamRoot);
   const prefixedUserRoutes = addPrefixRoutes(userRoutes, userRoot);
-  const prefixedRoutes = [...prefixedTeamRoutes, ...prefixedUserRoutes];
+  const prefixedPostRoutes = addPrefixRoutes(postRoutes, postRoot);
+  const prefixedRoutes = [
+    ...prefixedTeamRoutes,
+    ...prefixedUserRoutes,
+    ...prefixedPostRoutes,
+  ];
   const findPageTitle = (path: string): string =>
     prefixedRoutes.find((route) => route.path === path)?.name || "";
 
