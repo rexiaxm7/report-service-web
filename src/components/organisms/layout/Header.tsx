@@ -17,12 +17,12 @@ type Props = {
   onClickMenu: any;
 };
 export const Header: VFC<Props> = memo((props) => {
-  const { onClickApplicationTitle, loginUser, loginUserName, setLoginUser } =
-    useHeader();
+  const { onClickMenu } = props;
+  const { onClickApplicationTitle, loginUserName, setLoginUser } = useHeader();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const onClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onClickUserMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const onClickLogout = () => {
@@ -58,7 +58,7 @@ export const Header: VFC<Props> = memo((props) => {
               </span>
             </Typography>
             <Box>
-              <IconButton onClick={onClickMenu}>
+              <IconButton onClick={onClickUserMenu}>
                 <AccountCircleIcon style={{ color: "white" }} />
               </IconButton>
               <span>{loginUserName}</span>
