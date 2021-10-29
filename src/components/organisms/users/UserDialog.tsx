@@ -121,16 +121,10 @@ export const UserDialog: VFC<Props> = memo((props) => {
               required={true}
               helperText={errors.userName?.message}
               error={Boolean(errors.userName)}
-              register={register("userName")}
-            />
-
-            <TextField
-              label={"ユーザー名"}
-              required
-              error={Boolean(errors.userName)}
-              helperText={errors.userName?.message}
-              {...register("userName")}
-              fullWidth
+              onBlur={register("userName").onBlur}
+              onChange={register("userName").onChange}
+              ref={register("userName").ref}
+              name={register("userName").name}
             />
 
             <TextField

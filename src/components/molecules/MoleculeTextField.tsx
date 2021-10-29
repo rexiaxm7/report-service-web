@@ -6,13 +6,13 @@ import { UseFormRegisterReturn } from "react-hook-form";
 type Props = {
   error: boolean;
   helperText: string | undefined;
-  register: UseFormRegisterReturn;
   label: string;
   required: boolean;
-};
+} & UseFormRegisterReturn;
 
 export const MoleculeTextField: VFC<Props> = memo((props) => {
-  const { register, error, helperText, label, required } = props;
+  const { error, helperText, label, required } = props;
+  const register: UseFormRegisterReturn = props;
   return (
     <TextField
       label={label}
