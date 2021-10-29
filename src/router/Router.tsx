@@ -1,8 +1,8 @@
 import React, { memo, VFC } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { userRoutes } from "./directory/UserRoutes";
+import { useUserRoutes } from "./directory/UserRoutes";
 import { HeaderLayout } from "../components/templates/HeaderLayout";
-import { teamRoutes } from "./directory/TeamRoutes";
+import { useTeamRoutes } from "./directory/TeamRoutes";
 import { Page404 } from "../components/pages/Page404";
 import { SideMenuProvider } from "../providers/SideMenuProvider";
 import { UserModalProvider } from "../providers/UserModalProvider";
@@ -17,6 +17,9 @@ import { UserLogin } from "../../src/components/pages/UserLogin";
 import { Routes } from "./Routes";
 
 export const Router: VFC = memo(() => {
+  const { teamRoutes, teamRoot } = useTeamRoutes();
+  const { userRoutes, userRoot } = useUserRoutes();
+
   return (
     <Switch>
       <MessageProvider>
@@ -28,14 +31,14 @@ export const Router: VFC = memo(() => {
                   <UserModalProvider>
                     <TeamModalProvider>
                       <Route exact path="/">
-                        <Redirect to={"/users"} />
+                        <Redirect to={userRoot} />
                       </Route>
-                      <Routes path="/teams" routes={teamRoutes} />
+                      <Routes path={teamRoot} routes={teamRoutes} />
                       <Route path="/login">{<UserLogin />}</Route>
                       <Route path="/post">
                         <HeaderLayout>{<MonthlyReport />}</HeaderLayout>
                       </Route>
-                      <Routes path="/users" routes={userRoutes} />
+                      <Routes path={userRoot} routes={userRoutes} />
                     </TeamModalProvider>
                   </UserModalProvider>
                 </OperationModalProvider>

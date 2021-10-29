@@ -1,4 +1,4 @@
-import React, { memo, VFC } from "react";
+import React, { memo, useEffect, VFC } from "react";
 import { UserTable } from "../organisms/users/UserTable";
 import { Card, CardContent } from "@mui/material";
 

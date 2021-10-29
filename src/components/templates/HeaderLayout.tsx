@@ -1,4 +1,4 @@
-import React, { memo, ReactNode, useContext, VFC } from "react";
+import React, { memo, ReactNode, useContext, useEffect, VFC } from "react";
 import { Header } from "../organisms/layout/Header";
 import {
   Alert,
@@ -13,10 +13,11 @@ import {
   Snackbar,
 } from "@mui/material";
 import { useSideMenu } from "../../hooks/view/useSideMenu";
+import { usePageTitle } from "../../hooks/view/usePageTitle";
 import PersonIcon from "@mui/icons-material/Person";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import DescriptionIcon from "@mui/icons-material/Description";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { MessageContext } from "../../providers/MessageProvider";
 
 type Props = {
@@ -51,6 +52,14 @@ export const HeaderLayout: VFC<Props> = memo((props) => {
       path: "/post",
     },
   ];
+
+  const { findPageTitle } = usePageTitle();
+  const location = useLocation();
+
+  useEffect(() => {
+    const title: string = findPageTitle(location.pathname);
+    document.title = `${title || ""}${title ? " | " : ""}月報管理システム`;
+  }, [location]);
   return (
     <>
       <Snackbar
